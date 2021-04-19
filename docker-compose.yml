@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  postgres:
+    hostname: postgres
+    container_name: postgres
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: espy
+    volumes:
+      - "${DB_VOLUME}:/var/lib/postgresql/data"
