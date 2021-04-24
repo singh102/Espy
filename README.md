@@ -10,7 +10,6 @@ Current pages include:
 
 ### Documentation
 [Documentation](https://drive.google.com/file/d/1iz8zC2CdMfNpPhiBqdHCrULn53NWbbqh/view?usp=sharing)
-[embed]https://drive.google.com/file/d/1iz8zC2CdMfNpPhiBqdHCrULn53NWbbqh/view?usp=sharing[/embed]
 
 ### Database
 Setup
