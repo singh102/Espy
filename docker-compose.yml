@@ -7,10 +7,10 @@ services:
     image: postgres
     restart: unless-stopped
     ports:
-      - ${DB_PORT}:5432
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: espy
     volumes:
-      - "${DB_VOLUME}:/var/lib/postgresql/data"
+      - ./postgres-data:/var/lib/postgresql/data
