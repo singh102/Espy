@@ -8,7 +8,6 @@ import java.sql.Date;
 
 @Data
 @NoArgsConstructor
-@Entity
 public class Friends implements Serializable {
     private Integer id;
 
