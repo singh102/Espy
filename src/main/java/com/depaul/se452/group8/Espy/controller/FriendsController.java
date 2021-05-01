@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,6 +17,10 @@ public class FriendsController {
 
     @RequestMapping("/friends")
     public String friends() {
+        return "<h1>Friends Page!</h1>" + "\r\n" + addComment(commentsRepository);
+    }
+
+    public String addComment(CommentsRepository commentsRepository) {
         Comments comments = new Comments();
         comments.setComment("Test First Comment, woo!");
         comments.setImageId(1);
