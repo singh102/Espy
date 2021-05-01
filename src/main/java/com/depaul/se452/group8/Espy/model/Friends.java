@@ -1,5 +1,6 @@
 package com.depaul.se452.group8.Espy.model;
 
+import javax.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
