@@ -8,6 +8,6 @@ public class FriendSearchController {
 
     @RequestMapping("/friend-search")
     public String friendsSearch() {
-        return "Friends Search Page!";
+        return "<h1>Friends Search Page!</h1>";
     }
 }
