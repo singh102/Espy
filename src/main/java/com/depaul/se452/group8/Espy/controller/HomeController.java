@@ -1,14 +1,20 @@
 package com.depaul.se452.group8.Espy.controller;
 
+import com.depaul.se452.group8.Espy.model.Comments;
 import com.depaul.se452.group8.Espy.model.Likes;
+import com.depaul.se452.group8.Espy.repository.CommentsRepository;
 import com.depaul.se452.group8.Espy.repository.LikesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 public class HomeController {
+
+    @Autowired
+    private CommentsRepository commentsRepository;
 
     @Autowired
     private LikesRepository likesRepository;
@@ -16,7 +22,9 @@ public class HomeController {
     @RequestMapping("/")
     public String home() {
         likesRepository.findAll();
-        return "<h1>Home Page!</h1>" + "\r\n" + addLike(likesRepository);
+        return "<h1>Home Page!</h1>" + "\r\n" +
+                "<h3>Likes:</h3>" + addLike(likesRepository) + "\r\n" +
+                "<h3>Comments:</h3>" + addComment(commentsRepository);
     }
 
     public String addLike(LikesRepository likesRepository) {
@@ -31,5 +39,20 @@ public class HomeController {
         likesRepository.save(likes);
 
         return likes.toString();
+    }
+
+    public String addComment(CommentsRepository commentsRepository) {
+        Comments comments = new Comments();
+        comments.setComment("Test First Comment, woo!");
+        comments.setImageId(1);
+        comments.setUserId(1);
+        comments.setUpdatedAt(LocalDateTime.now());
+        comments.setCreatedAt(LocalDateTime.now());
+
+        commentsRepository.save(comments);
+
+        List<Comments> allComments = commentsRepository.findAll();
+
+        return allComments.toString();
     }
 }
