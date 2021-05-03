@@ -2,23 +2,33 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.sql.Date;
 
 @Data
+@Entity
 @NoArgsConstructor
+@Table(name = "user")
 public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "username")
     private String username;
 
+    @Column(name = "password")
     private String password;
 
     private String bio;
 
     private String avatar;
 
-    private Date createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
