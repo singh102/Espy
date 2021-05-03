@@ -37,3 +37,6 @@ build/
 
 ### Environment ###
 .env
+
+### Postgres ###
+/postgres-data
