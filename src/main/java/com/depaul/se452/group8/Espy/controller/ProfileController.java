@@ -25,7 +25,6 @@ public class ProfileController {
     public ModelAndView profile() {
         ModelAndView viewModel = new ModelAndView("profile");
         return viewModel;
-        //return "<h1>Profile Page!</h1>" + "\r\n" + addFavorite(favoritesRepository) + "\r\n" + addUser(userRepository);
     }
     public String addUser(UserRepository userRepository){
         User usr = new User();
