@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 
@@ -19,9 +20,11 @@ public class ProfileController {
     @Autowired
     FavoritesRepository favoritesRepository;
     UserRepository userRepository;
-    @RequestMapping("/profile")
-    public String profile() {
-        return "<h1>Profile Page!</h1>" + "\r\n" + addFavorite(favoritesRepository) + "\r\n" + addUser(userRepository);
+
+    @GetMapping("/profile")
+    public ModelAndView profile() {
+        ModelAndView viewModel = new ModelAndView("profile");
+        return viewModel;
     }
     public String addUser(UserRepository userRepository){
         User usr = new User();
