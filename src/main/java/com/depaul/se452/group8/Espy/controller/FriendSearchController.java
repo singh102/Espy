@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.depaul.se452.group8.Espy.model.Requests;
 import com.depaul.se452.group8.Espy.repository.RequestsRepository;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class FriendSearchController {
     @Autowired
     RequestsRepository requestsRepository;
-    @RequestMapping("/friend-search")
-    public String friendsSearch() {
-        return "<h1>Friends Search Page!</h1>";
+    @GetMapping("/friendsearch")
+    public ModelAndView friendsearch() {
+        ModelAndView viewModel = new ModelAndView("friendsearch");
+        return viewModel;
     }
-
     @GetMapping("/requests/{id}")
     public Requests getRequestByFriendID(@PathVariable Integer id) {
         return requestsRepository.findById(id).get();
