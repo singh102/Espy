@@ -18,13 +18,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="#" th:action="@{/saveProfile}" method="post" th:object="${user}">
                             <div class="form-group">
                                 <label for="profileAvatar">Upload Avatar Image</label>
                                 <input type="file" id="profileAvatar" class="form-control" name="profileAvatar"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="fullname" class="form-control mt-2 mb-2" placeholder="Full Name"/>
+                                <input type="text" id="firstname" class="form-control mt-2 mb-2" placeholder="First Name" th:field="*{firstName}"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="lastname" class="form-control mt-2 mb-2" placeholder="Last Name" th:field="*{lastName}"/>
                             </div>
                             <div class="form-group">
                                 <input type="text" id="email" class="form-control mt-2 mb-2" placeholder="Email"/>
@@ -41,11 +44,11 @@
                             <div class="form-group">
                                 <textarea placeholder="Interests/Activities" class="mt-2 mb-2"></textarea>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>

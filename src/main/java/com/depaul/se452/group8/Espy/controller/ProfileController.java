@@ -6,10 +6,7 @@ import com.depaul.se452.group8.Espy.model.User;
 import com.depaul.se452.group8.Espy.repository.UserRepository;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -24,25 +21,20 @@ public class ProfileController {
     @GetMapping("/profile")
     public ModelAndView profile() {
         ModelAndView viewModel = new ModelAndView("profile");
+        viewModel.addObject("user", new User());
         return viewModel;
     }
-    public String addUser(UserRepository userRepository){
-        User usr = new User();
-        usr.setBio("Bio here");
-        usr.setAvatar("123456");
-        usr.setCreatedAt(LocalDateTime.now());
-        usr.setUpdatedAt(LocalDateTime.now());
-        usr.setUsername("testUsEr");
-        usr.setPassword("123");
-        userRepository.save(usr);
 
-        return usr.toString();
+    @PostMapping("/saveProfile")
+    public String saveProfile(@ModelAttribute("user") User user) {
+        return "";
     }
 
-    @GetMapping("/user/{id}")
-    public User getUserByID(@PathVariable Integer id) {
-        return userRepository.findById(id).get();
-    }
+//    @GetMapping("/user/{id}")
+//    public User getUserByID(@PathVariable Integer id) {
+//        return userRepository.findById(id).get();
+//    }
+
     public String addFavorite(FavoritesRepository favoritesRepository) {
         Favorites favs = new Favorites();
         favs.setImageId(44524);
