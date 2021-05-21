@@ -22,9 +22,28 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "mobile")
+    private String mobile;
+
+    @Column(name = "interest_activity")
+    private String interestsAndActivities;
+
     private String bio;
 
-    private String avatar;
+    @Column(name = "avatar")
+    private byte[] avatar;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -1,0 +1,1 @@
+INSERT INTO users (username, password, first_name, last_name, email, phone, mobile, interest_activity, bio, avatar, created_at, updated_at) VALUES ('ksingh', 'canthackthis', 'Karthik', 'Singh', 'karthik.singh73@gmail.com', '111-222-3333', '444-555-7777', 'many things', 'my bio', null, null, null);

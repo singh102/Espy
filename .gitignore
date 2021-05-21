@@ -21,6 +21,7 @@ target/
 *.ipr
 .idea/libraries
 /build/
+/out
 
 ### NetBeans ###
 /nbproject/private/
