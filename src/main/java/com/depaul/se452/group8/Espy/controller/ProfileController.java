@@ -4,7 +4,6 @@ import com.depaul.se452.group8.Espy.model.Favorites;
 import com.depaul.se452.group8.Espy.repository.FavoritesRepository;
 import com.depaul.se452.group8.Espy.model.User;
 import com.depaul.se452.group8.Espy.repository.UserRepository;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
