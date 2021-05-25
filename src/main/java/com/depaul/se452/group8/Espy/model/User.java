@@ -45,6 +45,9 @@ public class User implements Serializable {
     @Column(name = "avatar")
     private byte[] avatar;
 
+    @Column(name = "address")
+    public String address;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
