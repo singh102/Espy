@@ -2,8 +2,10 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -42,8 +44,12 @@ public class User implements Serializable {
 
     private String bio;
 
-    @Column(name = "avatar")
-    private byte[] avatar;
+    @Lob
+    @Column(name = "avatar_img_base_64")
+    private String avatarImgBase64;
+
+    @Column(name = "address")
+    public String address;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

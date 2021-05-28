@@ -18,7 +18,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" th:action="@{/saveProfile}" method="post" th:object="${user}">
+                        <form action="#" th:action="@{/saveProfile}" method="post" th:object="${user}" enctype="multipart/form-data">
+                            <input type="hidden" th:field="*{id}" id="id"/>
                             <div class="form-group">
                                 <label for="profileAvatar">Upload Avatar Image</label>
                                 <input type="file" id="profileAvatar" class="form-control" name="profileAvatar"/>
@@ -30,19 +31,46 @@
                                 <input type="text" id="lastname" class="form-control mt-2 mb-2" placeholder="Last Name" th:field="*{lastName}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="email" class="form-control mt-2 mb-2" placeholder="Email"/>
+                                <input type="text" id="email" class="form-control mt-2 mb-2" placeholder="Email" th:field="*{email}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="phone" class="form-control mt-2 mb-2" placeholder="Phone"/>
+                                <input type="text" id="phone" class="form-control mt-2 mb-2" placeholder="Phone" th:field="*{phone}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="mobile" class="form-control mt-2 mb-2" placeholder="Mobile"/>
+                                <input type="text" id="mobile" class="form-control mt-2 mb-2" placeholder="Mobile" th:field="*{mobile}"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="address" class="form-control mt-2 mb-2" placeholder="Address"/>
+                                <input type="text" id="address" class="form-control mt-2 mb-2" placeholder="Address" th:field="*{address}"/>
                             </div>
                             <div class="form-group">
-                                <textarea placeholder="Interests/Activities" class="mt-2 mb-2"></textarea>
+                                <textarea placeholder="Interests/Activities" class="mt-2 mb-2" th:field="*{interestsAndActivities}"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addImageComment" tabindex="-1" aria-labelledby="addImageCommentLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addImageCommentLabel">Update Your Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" th:action="@{/addImageComment}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" th:field="${user.id}"/>
+                            <div class="form-group">
+                                <label for="imagePost">Upload Image</label>
+                                <input type="file" id="imagePost" class="form-control" name="imagePost"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Caption" class="mt-2 mb-2" name="caption"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -58,8 +86,8 @@
             <div class="col-12 col-lg-4 col-xl-3 order-2 order-lg-1">
                 <div class="card mb-3" style="width: 18rem;">
                     <div class="card-body text-center">
-                        <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="128" height="128">
-                        <h4 class="card-title mb-0">Karthik Singh</h4>
+                        <img th:src="@{${'data:image/png;base64,' + user.avatarImgBase64}}" class="img-fluid rounded-circle mb-2" width="128" height="128">
+                        <h4 class="card-title mb-0" th:text="${user.firstName + ' ' + user.lastName}"></h4>
                         <div class="mt-2">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 Edit Profile
@@ -75,8 +103,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Full Name</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                Karthik Singh
+                            <div class="col-sm-9 text-secondary" th:text="${user.firstName + ' ' + user.lastName}">
                             </div>
                         </div>
                         <hr>
@@ -84,8 +111,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Email</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                karthik.singh73@gmail.com
+                            <div class="col-sm-9 text-secondary" th:text="${user.email}">
                             </div>
                         </div>
                         <hr>
@@ -93,8 +119,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Phone</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                (111) 222-2345
+                            <div class="col-sm-9 text-secondary" th:text="${user.phone}">
                             </div>
                         </div>
                         <hr>
@@ -102,8 +127,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Mobile</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                (888) 537-9023
+                            <div class="col-sm-9 text-secondary" th:text="${user.mobile}">
                             </div>
                         </div>
                         <hr>
@@ -111,8 +135,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Address</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                123 Fake St. Chicago, IL
+                            <div class="col-sm-9 text-secondary" th:text="${user.address}">
                             </div>
                         </div>
                     </div>
@@ -122,7 +145,7 @@
                 <div class="card mb-3" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Interests/Activities</h5>
-                        <p class="card-text">I love taking photo's and sharing them with the world!</p>
+                        <p class="card-text" th:text="${user.interestsAndActivities}"></p>
                     </div>
                 </div>
             </div>
@@ -130,56 +153,15 @@
         <div class="row">
             <div class="mt-4 mb-2">
                 <h4 class="mb-3">Your Images</h4>
-                <form>
-                    <label for="uploadedImage">Upload Image: </label>
-                    <input type="file" id="uploadedImage" name="uploadedImage">
-                </form>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageComment">
+                    Upload Image and Comment
+                </button>
             </div>
-            <div class="col-3">
+            <div class="col-3" th:each="post : ${posts}">
                 <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" data-src="holder.js/100px180/?text=Image" alt="Image cap [100%x180]" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17972984b0d%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17972984b0d%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2298.91666793823242%22%20y%3D%2295.7%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                    <img class="card-img-top" style="height: 180px; width: 100%; display: block;" th:src="@{${'data:image/png;base64,' + post.imageBase64}}" data-holder-rendered="true">
                     <div class="card-body">
-                        <p class="card-text">Image Caption</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" data-src="holder.js/100px180/?text=Image" alt="Image cap [100%x180]" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17972984b0d%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17972984b0d%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2298.91666793823242%22%20y%3D%2295.7%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <div class="card-body">
-                        <p class="card-text">Image Caption</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" data-src="holder.js/100px180/?text=Image" alt="Image cap [100%x180]" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17972984b0d%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17972984b0d%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2298.91666793823242%22%20y%3D%2295.7%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <div class="card-body">
-                        <p class="card-text">Image Caption</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" data-src="holder.js/100px180/?text=Image" alt="Image cap [100%x180]" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17972984b0d%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17972984b0d%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2298.91666793823242%22%20y%3D%2295.7%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <div class="card-body">
-                        <p class="card-text">Image Caption</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" data-src="holder.js/100px180/?text=Image" alt="Image cap [100%x180]" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17972984b0d%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17972984b0d%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2298.91666793823242%22%20y%3D%2295.7%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <div class="card-body">
-                        <p class="card-text">Image Caption</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" data-src="holder.js/100px180/?text=Image" alt="Image cap [100%x180]" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17972984b0d%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17972984b0d%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2298.91666793823242%22%20y%3D%2295.7%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <div class="card-body">
-                        <p class="card-text">Image Caption</p>
+                        <p class="card-text" th:text="${post.caption}"></p>
                     </div>
                 </div>
             </div>
