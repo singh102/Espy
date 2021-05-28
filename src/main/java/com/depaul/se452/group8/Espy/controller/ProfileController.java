@@ -1,7 +1,9 @@
 package com.depaul.se452.group8.Espy.controller;
 
+import com.depaul.se452.group8.Espy.model.Images;
 import com.depaul.se452.group8.Espy.model.User;
 import com.depaul.se452.group8.Espy.repository.FavoritesRepository;
+import com.depaul.se452.group8.Espy.repository.ImagesRepository;
 import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -12,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -26,10 +30,11 @@ public class ProfileController {
     ImageService imageService;
 
     @GetMapping("profile/{id}")
-    public ModelAndView profile(@PathVariable (value = "id") int id) {
+    public ModelAndView profile(@PathVariable(value = "id")Integer id) {
         ModelAndView viewModel = new ModelAndView("profile");
         User user = userService.getUserById(id);
         viewModel.addObject("user", user);
+        viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
         return viewModel;
     }
 
@@ -39,6 +44,14 @@ public class ProfileController {
         user.setAvatarImgBase64(imageService.convertByteArrayToBase64String(imageFile.getBytes()));
         userService.saveUser(user);
         return "redirect:/profile/" + user.getId();
+    }
+
+    @PostMapping("/addImageComment")
+    public String addImageComment(@RequestParam("id")Integer id,
+                                  @RequestParam("imagePost")MultipartFile imageFile,
+                                  @RequestParam("caption")String caption) throws IOException {
+        imageService.addImageAndCaptionToUser(id, imageFile, caption);
+        return "redirect:/profile/" + id;
     }
 
 //    public String addFavorite(FavoritesRepository favoritesRepository) {

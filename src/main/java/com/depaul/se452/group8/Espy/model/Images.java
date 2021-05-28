@@ -21,7 +21,9 @@ public class Images implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
 
-    private String image;
+    @Lob
+    @Column(name = "image_base_64")
+    private String imageBase64;
 
     private String caption;
 
