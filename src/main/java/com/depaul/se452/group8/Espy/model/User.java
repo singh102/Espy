@@ -2,10 +2,8 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.io.File;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -18,9 +16,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "username")
+    @NotEmpty
+    @Column(nullable = false, unique = true, name = "username")
     private String username;
 
+    @NotEmpty
     @Column(name = "password")
     private String password;
 
