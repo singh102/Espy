@@ -4,15 +4,20 @@ import com.depaul.se452.group8.Espy.model.Comments;
 import com.depaul.se452.group8.Espy.model.Likes;
 import com.depaul.se452.group8.Espy.repository.CommentsRepository;
 import com.depaul.se452.group8.Espy.repository.LikesRepository;
+import com.depaul.se452.group8.Espy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController
+@Controller
 public class HomeController {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private CommentsRepository commentsRepository;
@@ -20,19 +25,17 @@ public class HomeController {
     @Autowired
     private LikesRepository likesRepository;
 
-    @RequestMapping("/")
+    @GetMapping("/home")
     public ModelAndView home() {
         ModelAndView viewModel = new ModelAndView("home");
         return viewModel;
     }
 
-//    @RequestMapping("/")
-//    public String home() {
-//        likesRepository.findAll();
-//        return "<h1>Home Page!</h1>" + "\r\n" +
-//                "<h3>Likes:</h3>" + addLike(likesRepository) + "\r\n" +
-//                "<h3>Comments:</h3>" + addComment(commentsRepository);
-//    }
+    @GetMapping("/")
+    public ModelAndView home2() {
+        ModelAndView viewModel = new ModelAndView("home");
+        return viewModel;
+    }
 
     public String addLike(LikesRepository likesRepository) {
         Likes likes = new Likes();

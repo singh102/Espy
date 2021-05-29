@@ -53,19 +53,4 @@ public class ProfileController {
         imageService.addImageAndCaptionToUser(id, imageFile, caption);
         return "redirect:/profile/" + id;
     }
-
-//    public String addFavorite(FavoritesRepository favoritesRepository) {
-//        Favorites favs = new Favorites();
-//        favs.setImageId(44524);
-//        favs.setCreatedAt(LocalDateTime.now());
-//        favs.setUpdatedAt(LocalDateTime.now());
-//        favs.addFavorite(favs.getImageId());
-//        favs.addFavorite(135432);
-//        favs.addFavorite(846486890);
-//        System.out.println("List of favs: " + favs.getFavorites());
-//
-//        favoritesRepository.save(favs);
-//
-//        return favs.toString();
-//    }
 }

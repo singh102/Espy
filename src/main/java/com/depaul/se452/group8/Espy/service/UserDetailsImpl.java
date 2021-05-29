@@ -1,4 +1,4 @@
-package com.depaul.se452.group8.Espy.config;
+package com.depaul.se452.group8.Espy.service;
 
 import com.depaul.se452.group8.Espy.model.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +16,10 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public int getId() {
+        return user.getId();
     }
 
     @Override
@@ -46,5 +50,9 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User getUserDetails() {
+        return user;
     }
 }

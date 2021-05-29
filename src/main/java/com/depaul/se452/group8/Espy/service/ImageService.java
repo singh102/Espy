@@ -6,8 +6,6 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
