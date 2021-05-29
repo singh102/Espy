@@ -2,6 +2,8 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
@@ -39,13 +41,11 @@ public class User implements Serializable {
     @Column(name = "mobile")
     private String mobile;
 
-    @Column(name = "interest_activity")
-    private String interestsAndActivities;
-
     private String bio;
 
     @Lob
     @Column(name = "avatar_img_base_64")
+    @Type(type = "org.hibernate.type.TextType")
     private String avatarImgBase64;
 
     @Column(name = "address")

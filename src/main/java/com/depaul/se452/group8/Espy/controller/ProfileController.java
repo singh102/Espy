@@ -35,7 +35,13 @@ public class ProfileController {
     @PostMapping("/saveProfile")
     public String saveProfile(@ModelAttribute("user") User user,
                               @RequestParam("profileAvatar")MultipartFile imageFile) throws IOException {
-        user.setAvatarImgBase64(imageService.convertByteArrayToBase64String(imageFile.getBytes()));
+        if (!imageFile.isEmpty()) {
+            user.setAvatarImgBase64(imageService.convertByteArrayToBase64String(imageFile.getBytes()));
+        } else {
+            User existingUser = userService.getUserById(user.getId());
+            user.setAvatarImgBase64(existingUser.getAvatarImgBase64());
+        }
+
         userService.saveUser(user);
         return "redirect:/profile/" + user.getId();
     }
