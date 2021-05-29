@@ -2,23 +2,58 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.sql.Date;
 
 @Data
+@Entity
 @NoArgsConstructor
+@Table(name = "users")
 public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty
+    @Column(nullable = false, unique = true, name = "username")
     private String username;
 
+    @NotEmpty
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "mobile")
+    private String mobile;
 
     private String bio;
 
-    private String avatar;
+    @Lob
+    @Column(name = "avatar_img_base_64")
+    @Type(type = "org.hibernate.type.TextType")
+    private String avatarImgBase64;
 
-    private Date createdAt;
+    @Column(name = "address")
+    public String address;
 
-    private Date updatedAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

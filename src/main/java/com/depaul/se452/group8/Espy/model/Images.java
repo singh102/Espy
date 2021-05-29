@@ -2,21 +2,35 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@Entity
+@Table(name = "images")
 public class Images implements Serializable {
-    private Integer id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id")
     private Integer userId;
 
-    private String image;
+    @Lob
+    @Column(name = "image_base_64")
+    @Type(type = "org.hibernate.type.TextType")
+    private String imageBase64;
 
     private String caption;
 
-    private Date createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

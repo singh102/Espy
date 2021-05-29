@@ -2,7 +2,6 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;

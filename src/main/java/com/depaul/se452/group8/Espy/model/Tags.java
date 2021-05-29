@@ -2,19 +2,28 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@Entity
+@Table(name = "tags")
 public class Tags implements Serializable {
-    private Integer id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "image_id")
     private Integer imageId;
 
     private String tag;
 
-    private Date createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

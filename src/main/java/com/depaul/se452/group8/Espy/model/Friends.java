@@ -1,21 +1,29 @@
 package com.depaul.se452.group8.Espy.model;
 
-import javax.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
+@Entity
 @NoArgsConstructor
+@Table(name = "friends")
 public class Friends implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_id", nullable = false)
     private Integer userId;
 
+    @Column(name = "friend_id", nullable = false)
     private Integer friendId;
 
-    private Date createdAt;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 }
