@@ -20,10 +20,20 @@
                     <div class="modal-body">
                         <form action="#" th:action="@{/saveProfile}" method="post" th:object="${user}" enctype="multipart/form-data">
                             <input type="hidden" th:field="*{id}" id="id"/>
+                            <h7 class="modal-title">Choose Avatar Image:</h7>
                             <div class="form-group">
-                                <label for="profileAvatar">Upload Avatar Image</label>
                                 <input type="file" id="profileAvatar" class="form-control" name="profileAvatar"/>
                             </div>
+                            <hr>
+                            <h7 class="modal-title">Username & Password:</h7>
+                            <div class="form-group">
+                                <input type="text" id="username" class="form-control mt-2 mb-2" placeholder="Username" th:field="*{username}"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="password" class="form-control mt-2 mb-2" placeholder="Password" name="password" th:value="*{password}"/>
+                            </div>
+                            <hr>
+                            <h7 class="modal-title">Bio Info:</h7>
                             <div class="form-group">
                                 <input type="text" id="firstname" class="form-control mt-2 mb-2" placeholder="First Name" th:field="*{firstName}"/>
                             </div>
@@ -43,7 +53,7 @@
                                 <input type="text" id="address" class="form-control mt-2 mb-2" placeholder="Address" th:field="*{address}"/>
                             </div>
                             <div class="form-group">
-                                <textarea placeholder="Interests/Activities" class="mt-2 mb-2" th:field="*{interestsAndActivities}"></textarea>
+                                <textarea id="bio" placeholder="Bio" class="mt-2 mb-2" th:field="*{bio}"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -86,7 +96,7 @@
             <div class="col-12 col-lg-4 col-xl-3 order-2 order-lg-1">
                 <div class="card mb-3" style="width: 18rem;">
                     <div class="card-body text-center">
-                        <img th:src="@{${'data:image/png;base64,' + user.avatarImgBase64}}" class="img-fluid rounded-circle mb-2" width="128" height="128">
+                        <img th:src="@{${user.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + user.avatarImgBase64} : '/images/user.png'}" class="img-fluid mb-2" width="128" height="128">
                         <h4 class="card-title mb-0" th:text="${user.firstName + ' ' + user.lastName}"></h4>
                         <div class="mt-2">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
@@ -145,7 +155,7 @@
                 <div class="card mb-3" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Interests/Activities</h5>
-                        <p class="card-text" th:text="${user.interestsAndActivities}"></p>
+                        <p class="card-text" th:text="${user.bio}"></p>
                     </div>
                 </div>
             </div>
@@ -154,13 +164,14 @@
             <div class="mt-4 mb-2">
                 <h4 class="mb-3">Your Images</h4>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageComment">
-                    Upload Image and Comment
+                    Upload Image and Caption
                 </button>
             </div>
             <div class="col-3" th:each="post : ${posts}">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img class="card-img-top" style="height: 180px; width: 100%; display: block;" th:src="@{${'data:image/png;base64,' + post.imageBase64}}" data-holder-rendered="true">
-                    <div class="card-body">
+                <div class="card mt-2" style="width: 18rem; border-radius: 20px;">
+                    <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
+border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + post.imageBase64}}" data-holder-rendered="true">
+                    <div class="card-body" style="height: 80px;">
                         <p class="card-text" th:text="${post.caption}"></p>
                     </div>
                 </div>
