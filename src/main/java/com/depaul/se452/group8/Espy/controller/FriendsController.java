@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import javax.validation.Valid;
 
 @Controller
-public class FriendsController {
+public class FriendsController extends BaseController {
 
     @Autowired
     private FriendsRepository friendsRepository;
