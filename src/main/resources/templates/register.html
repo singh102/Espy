@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html>
+<head th:replace="fragments/header :: header"></head>
+
+<body>
+    <div class="container p-4">
+        <h3>Register</h3>
+        <form action="#" th:action="@{/registerUser}" method="post" th:object="${user}" enctype="multipart/form-data">
+            <h7 class="modal-title">Choose Avatar Image:</h7>
+            <div class="form-group">
+                <input type="file" id="profileAvatar" class="form-control" name="profileAvatar"/>
+            </div>
+            <hr>
+            <h7 class="modal-title">Username & Password:</h7>
+            <div class="form-group">
+                <input type="text" id="username" class="form-control mt-2 mb-2" placeholder="Username" th:field="*{username}"/>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" class="form-control mt-2 mb-2" placeholder="Password" name="password" th:value="*{password}"/>
+            </div>
+            <hr>
+            <h7 class="modal-title">Bio Info:</h7>
+            <div class="form-group">
+                <input type="text" id="firstname" class="form-control mt-2 mb-2" placeholder="First Name" th:field="*{firstName}"/>
+            </div>
+            <div class="form-group">
+                <input type="text" id="lastname" class="form-control mt-2 mb-2" placeholder="Last Name" th:field="*{lastName}"/>
+            </div>
+            <div class="form-group">
+                <input type="text" id="email" class="form-control mt-2 mb-2" placeholder="Email" th:field="*{email}"/>
+            </div>
+            <div class="form-group">
+                <input type="text" id="phone" class="form-control mt-2 mb-2" placeholder="Phone" th:field="*{phone}"/>
+            </div>
+            <div class="form-group">
+                <input type="text" id="mobile" class="form-control mt-2 mb-2" placeholder="Mobile" th:field="*{mobile}"/>
+            </div>
+            <div class="form-group">
+                <input type="text" id="address" class="form-control mt-2 mb-2" placeholder="Address" th:field="*{address}"/>
+            </div>
+            <div class="form-group">
+                <textarea id="bio" placeholder="Bio" class="mt-2 mb-2" th:field="*{bio}"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </div>
+        </form>
+    </div>
+</body>

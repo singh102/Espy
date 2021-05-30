@@ -97,7 +97,7 @@
                 <div class="card mb-3" style="width: 18rem;">
                     <div class="card-body text-center">
                         <img th:src="@{${user.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + user.avatarImgBase64} : '/images/user.png'}" class="img-fluid mb-2" width="128" height="128">
-                        <h4 class="card-title mb-0" th:text="${user.firstName + ' ' + user.lastName}"></h4>
+                        <h4 class="card-title mb-0" th:text="${user.username}"></h4>
                         <div class="mt-2">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 Edit Profile
