@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @Configuration
@@ -47,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/registerUser").permitAll()
                 .antMatchers("/resources/**").permitAll().anyRequest().authenticated().and()
-                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/");
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/").and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
