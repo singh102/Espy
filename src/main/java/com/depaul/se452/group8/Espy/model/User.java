@@ -26,6 +26,10 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
+    @NotEmpty
+    @Column(name = "plainPassword")
+    private String plainPassword;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -49,7 +53,7 @@ public class User implements Serializable {
     private String avatarImgBase64;
 
     @Column(name = "address")
-    public String address;
+    private String address;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
