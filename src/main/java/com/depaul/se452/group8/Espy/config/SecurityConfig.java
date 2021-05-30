@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**").permitAll().anyRequest().authenticated().and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/")
                 .and().logout().invalidateHttpSession(true)
-                .clearAuthentication(true).logoutSuccessUrl("/login").permitAll();
+                .clearAuthentication(true).logoutSuccessUrl("/login");
 
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();

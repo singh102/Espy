@@ -13,7 +13,6 @@ public class BaseController {
     @ModelAttribute("SignedInUser")
     public User getSignedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         if (auth.getPrincipal() instanceof UserDetailsImpl) {
             UserDetailsImpl userDetails = (UserDetailsImpl)auth.getPrincipal();
             return userDetails.getUserDetails();

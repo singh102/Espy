@@ -19,7 +19,6 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        user.setPlainPassword(user.getPassword());
         user.setPassword(encryptPassword(user.getPassword()));
         userRepository.save(user);
         return user;
