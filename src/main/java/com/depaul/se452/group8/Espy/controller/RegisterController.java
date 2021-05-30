@@ -41,8 +41,7 @@ public class RegisterController {
             user.setAvatarImgBase64(imageService.convertByteArrayToBase64String(imageFile.getBytes()));
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+        user.setPlainPassword(user.getPassword());
         userService.saveUser(user);
         return "redirect:/profile/" + user.getId();
     }
