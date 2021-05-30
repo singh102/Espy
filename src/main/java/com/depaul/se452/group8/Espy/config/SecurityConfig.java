@@ -48,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/registerUser").permitAll()
                 .antMatchers("/resources/**").permitAll().anyRequest().authenticated().and()
-                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/").and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/")
+                .and().logout().invalidateHttpSession(true)
+                .clearAuthentication(true).logoutSuccessUrl("/login").permitAll();
 
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
