@@ -2,8 +2,10 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -16,15 +18,38 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "username")
+    @NotEmpty
+    @Column(nullable = false, unique = true, name = "username")
     private String username;
 
+    @NotEmpty
     @Column(name = "password")
     private String password;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "mobile")
+    private String mobile;
+
     private String bio;
 
-    private String avatar;
+    @Lob
+    @Column(name = "avatar_img_base_64")
+    @Type(type = "org.hibernate.type.TextType")
+    private String avatarImgBase64;
+
+    @Column(name = "address")
+    public String address;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

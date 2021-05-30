@@ -4,11 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import java.io.Serializable;
-
 
 @Data
 @Entity

@@ -4,13 +4,13 @@ import com.depaul.se452.group8.Espy.model.Blocked;
 import com.depaul.se452.group8.Espy.model.Friends;
 import com.depaul.se452.group8.Espy.repository.BlockedRepository;
 import com.depaul.se452.group8.Espy.repository.FriendsRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import javax.validation.Valid;
 
-@RestController
+@Controller
 public class FriendsController {
 
     @Autowired

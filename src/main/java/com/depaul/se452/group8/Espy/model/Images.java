@@ -2,10 +2,10 @@ package com.depaul.se452.group8.Espy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,7 +21,10 @@ public class Images implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
 
-    private String image;
+    @Lob
+    @Column(name = "image_base_64")
+    @Type(type = "org.hibernate.type.TextType")
+    private String imageBase64;
 
     private String caption;
 
