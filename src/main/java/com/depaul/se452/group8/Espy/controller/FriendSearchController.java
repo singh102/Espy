@@ -13,7 +13,7 @@ import com.depaul.se452.group8.Espy.repository.RequestsRepository;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class FriendSearchController {
+public class FriendSearchController extends BaseController {
     @Autowired
     RequestsRepository requestsRepository;
     @GetMapping("/friendsearch")

@@ -5,6 +5,8 @@ import com.depaul.se452.group8.Espy.repository.FavoritesRepository;
 import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 
 @Controller
-public class ProfileController {
+public class ProfileController extends BaseController {
 
     @Autowired
     FavoritesRepository favoritesRepository;
@@ -25,6 +27,9 @@ public class ProfileController {
 
     @GetMapping("profile/{id}")
     public ModelAndView profile(@PathVariable(value = "id")Integer id) {
+
+
+
         ModelAndView viewModel = new ModelAndView("profile");
         User user = userService.getUserById(id);
         viewModel.addObject("user", user);
