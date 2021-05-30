@@ -7,6 +7,7 @@ import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +28,6 @@ public class ProfileController extends BaseController {
 
     @GetMapping("profile/{id}")
     public ModelAndView profile(@PathVariable(value = "id")Integer id) {
-
-
-
         ModelAndView viewModel = new ModelAndView("profile");
         User user = userService.getUserById(id);
         viewModel.addObject("user", user);

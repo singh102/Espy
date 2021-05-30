@@ -26,6 +26,10 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
+    @NotEmpty
+    @Column(name = "plainPassword")
+    private String plainPassword;
+
     @Column(name = "first_name")
     private String firstName;
 
