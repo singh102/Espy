@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class HomeController extends BaseController {
 
     @Autowired
     private UserRepository userRepository;
