@@ -39,15 +39,17 @@ public class BaseController {
     }
 
     @ModelAttribute("SignedInUser")
-    public ModelAndView getDifferenceInId(Integer id, String path, UserDetailsImpl details) {
+    public ModelAndView getDifferenceInId(Integer id, String path) {
         ModelAndView viewModel = new ModelAndView(path);
         if (!getSignedInUser().getId().equals(id)) {
-            viewModel.addObject("user", userService.getUserById(details.getId()));
-            viewModel.addObject("posts", imagesRepository.findByUserIds(details.getId()));
+            User user = userService.getUserById(getSignedInUser().getId());
+            viewModel.addObject("user", user);
+            viewModel.addObject("posts", imageService.getAllImagesByUserId(getSignedInUser().getId()));
             return viewModel;
         } else {
-            viewModel.addObject("user", userService.getUserById(details.getId()));
-            viewModel.addObject("posts", imagesRepository.findByUserIds(details.getId()));
+            User user = userService.getUserById(id);
+            viewModel.addObject("user", user);
+            viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
             return viewModel;
         }
     }

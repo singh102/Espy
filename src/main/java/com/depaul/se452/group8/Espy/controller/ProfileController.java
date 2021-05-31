@@ -17,13 +17,13 @@ public class ProfileController extends BaseController {
     FavoritesRepository favoritesRepository;
 
     @GetMapping("/profile/{id}")
-    public ModelAndView profile(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "profile", userDetails);
+    public ModelAndView profile(@PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "profile");
     }
 
     @GetMapping("/profile")
-    public ModelAndView profileRedirect(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return profile(userDetails, getSignedInUser().getId());
+    public ModelAndView profileRedirect() {
+        return profile(getSignedInUser().getId());
     }
 
     @PostMapping("/saveProfile")

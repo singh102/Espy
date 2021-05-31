@@ -25,9 +25,13 @@ public class HomeController extends BaseController {
     @Autowired
     LikesRepository likesRepository;
 
+
     @GetMapping("/home/{id}")
     public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "/home", userDetails);
+        ModelAndView viewModel = new ModelAndView("home");
+        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
+        viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
+        return viewModel;
     }
 
     @PostMapping("/posts/{id}/comment")
