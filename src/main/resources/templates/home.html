@@ -19,7 +19,8 @@
                         <div class="row">
                             <div class="col">
                                 <img th:src="@{${'data:image/png;base64,' + post.user.avatarImgBase64}}" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
-                                <a th:href="${'/friends/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
+                                <a th:if="${post.user.id != SignedInUser.id}" th:href="${'/friends/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
+                                <a th:if="${post.user.id == SignedInUser.id}" th:href="${'/profile/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
                             </div>
 
                             <div class="col text-end">
@@ -54,7 +55,8 @@
 
                     <p class="small mb-2" th:each="comment : ${post.allComments}">
                         <img th:src="@{${'data:image/png;base64,' + comment.user.avatarImgBase64}}" width="16" height="16" />
-                        <span class="pl-5 fw-bolder" th:text="${comment.user.username}" />
+                        <a th:if="${comment.user.id != SignedInUser.id}" th:href="${'/friends/' + comment.user.id}" class="small fw-bolder my-auto" th:text="${comment.user.username}" />
+                        <a th:if="${comment.user.id == SignedInUser.id}" th:href="${'/profile/' + comment.user.id}" class="small fw-bolder my-auto" th:text="${comment.user.username}" />
                         <br />
                         <span th:text="${comment.comment}" />
                     </p>
