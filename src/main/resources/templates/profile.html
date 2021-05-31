@@ -85,6 +85,9 @@
                             <div class="form-group">
                                 <textarea placeholder="Caption" class="mt-2 mb-2" name="caption"></textarea>
                             </div>
+                            <div class="form-group">
+                                <input type="text" name="tags" placeholder="Tags (separate by commas)" />
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -199,7 +202,10 @@
                 <div class="card mt-2" style="width: 100%; border-radius: 20px;">
                     <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
 border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + post.imageBase64}}" data-holder-rendered="true">
-                    <div class="card-body" style="height: 80px;">
+                    <div class="card-body" style="height: 120px;">
+                        <p>
+                            <span class="badge rounded-pill bg-secondary" th:each="tag : ${post.allTags}" th:text="${tag.tag}" style="margin-right:6px;" />
+                        </p>
                         <p class="card-text" th:text="${post.caption}"></p>
                     </div>
                 </div>
@@ -216,7 +222,7 @@ border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + post.imag
                 <div class="card mt-2" style="width: 100%; border-radius: 20px;">
                     <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
 border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + favorite.image.imageBase64}}" data-holder-rendered="true">
-                    <div class="card-body" style="height: 80px;">
+                    <div class="card-body" style="height: 120px;">
                         <p class="card-text" th:text="${favorite.image.caption}"></p>
                     </div>
                 </div>
