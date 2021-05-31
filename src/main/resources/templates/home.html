@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col">
                             <p class="small">
-                                <form method="post" th:action="${'/posts/' + post.id + '/like'}">
+                                <form th:if="${post.liked != true}" method="post" th:action="${'/posts/' + post.id + '/like'}">
                                     <button type="submit" class="btn btn-link d-inline align-middle p-0">
                                         <i class="far fa-thumbs-up"></i>
                                     </button>
@@ -45,17 +45,36 @@
                                         <span th:if="${#lists.size(post.allLikes) == 1}" th:text="${' Like'}" />
                                     </span>
                                 </form>
+
+                                <p th:if="${post.liked == true}">
+                                    <span class="btn btn-link d-inline align-middle p-0">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </span>
+
+                                    <span class="d-inline align-middle">
+                                        <span th:text="${#lists.size(post.allLikes)}" />
+                                        <span th:if="${#lists.size(post.allLikes) != 1}" th:text="${' Likes'}" />
+                                        <span th:if="${#lists.size(post.allLikes) == 1}" th:text="${' Like'}" />
+                                    </span>
+                                </p>
                             </p>
                         </div>
 
                         <div class="col text-end">
                             <p class="small">
-                                <form method="post" th:action="${'/posts/' + post.id + '/favorite'}">
+                                <form th:if="${post.favorited != true}" method="post" th:action="${'/posts/' + post.id + '/favorite'}">
                                     <span class="d-inline align-middle">Favorite </span>
                                     <button type="submit" class="btn btn-link d-inline align-middle p-0">
                                         <i class="far fa-heart"></i>
                                     </button>
-                                 </form>
+                                </form>
+
+                                <p th:if="${post.favorited == true}">
+                                    <span class="d-inline align-middle">Favorited </span>
+                                    <span class="btn btn-link d-inline align-middle p-0">
+                                        <i class="fas fa-heart"></i>
+                                    </span>
+                                </p>
                             </p>
                         </div>
                     </div>

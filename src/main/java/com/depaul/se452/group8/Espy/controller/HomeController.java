@@ -1,8 +1,6 @@
 package com.depaul.se452.group8.Espy.controller;
 
-import com.depaul.se452.group8.Espy.model.Comments;
-import com.depaul.se452.group8.Espy.model.Favorites;
-import com.depaul.se452.group8.Espy.model.Likes;
+import com.depaul.se452.group8.Espy.model.*;
 import com.depaul.se452.group8.Espy.repository.*;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class HomeController extends BaseController {
@@ -32,8 +32,28 @@ public class HomeController extends BaseController {
     @GetMapping("/home")
     public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         ModelAndView viewModel = new ModelAndView("home");
-        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
-        viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
+        User user = userService.getUserById(userDetails.getId());
+        Collection<Images> posts = imagesRepository.findByUserIds(userDetails.getId());
+
+        for (Images post: posts) {
+            for (Likes like : post.getAllLikes()) {
+                if (like.getUserId() == userDetails.getId()) {
+                    post.setLiked(true);
+                }
+            }
+        }
+
+        for (Images post: posts) {
+            for (Favorites favorite : post.getAllFavorites()) {
+                if (favorite.getUserId() == userDetails.getId()) {
+                    post.setFavorited(true);
+                }
+            }
+        }
+
+        viewModel.addObject("user", user);
+        viewModel.addObject("posts", posts);
+
         return viewModel;
     }
 
