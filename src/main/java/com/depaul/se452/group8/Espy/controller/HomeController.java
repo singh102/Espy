@@ -26,8 +26,8 @@ public class HomeController extends BaseController {
     LikesRepository likesRepository;
 
 
-    @GetMapping("/home/{id}")
-    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+    @GetMapping("/home")
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         ModelAndView viewModel = new ModelAndView("home");
         viewModel.addObject("user", userService.getUserById(userDetails.getId()));
         viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
