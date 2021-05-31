@@ -1,7 +1,7 @@
-<div th:fragment="navbar">
+<div th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">ESPY</a>
+            <a class="navbar-brand" th:href="${'/home'}">ESPY</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -10,31 +10,42 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" th:href="${'/home'}">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="${'/profile/' + {SignedInUser.id}}">Profile</a>
+                        <a class="nav-link" th:href="${'/profile'}">Profile</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/friendsearch">Friends</a>
+                        <a class="nav-link" th:href="${'/friendsearch/' + {SignedInUser.id}}">Friends</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item" th:if="${SignedInUser == null}">
-                                <a class="nav-link" href="/login">Login</a>
-                            </li>
-                            <li class="nav-item" th:if="${SignedInUser != null}">
-                                <a class="nav-link" href="/logout">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
+
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item" th:if="${SignedInUser == null}">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+
+                    <li class="nav-item" th:if="${SignedInUser != null}">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+
+<!--                <form class="d-flex">-->
+<!--                    <div class="collapse navbar-collapse">-->
+<!--                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                            <li class="nav-item" th:if="${SignedInUser == null}">-->
+<!--                                <a class="nav-link" href="/login">Login</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item" th:if="${SignedInUser != null}">-->
+<!--                                <a class="nav-link" href="/logout">Logout</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
 <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
 <!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
-                </form>
+<!--                </form>-->
             </div>
         </div>
     </nav>

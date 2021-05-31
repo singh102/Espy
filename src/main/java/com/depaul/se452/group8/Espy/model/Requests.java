@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "requests")
 public class Requests implements Serializable {
     private static Set<Integer> reqs = new HashSet<Integer>();

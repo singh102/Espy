@@ -3,15 +3,16 @@ package com.depaul.se452.group8.Espy.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "users")
 public class User implements Serializable {
     @Id
@@ -53,11 +54,20 @@ public class User implements Serializable {
     private String avatarImgBase64;
 
     @Column(name = "address")
-    public String address;
+    private String address;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comments> allComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Images> allImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Friends> allFriends = new ArrayList<>();
 }

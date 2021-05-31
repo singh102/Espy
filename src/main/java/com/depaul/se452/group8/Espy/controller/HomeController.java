@@ -2,67 +2,65 @@ package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.Comments;
 import com.depaul.se452.group8.Espy.model.Likes;
-import com.depaul.se452.group8.Espy.repository.CommentsRepository;
-import com.depaul.se452.group8.Espy.repository.LikesRepository;
-import com.depaul.se452.group8.Espy.repository.UserRepository;
+import com.depaul.se452.group8.Espy.repository.*;
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 public class HomeController extends BaseController {
+    @Autowired
+    FriendsRepository friendsRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    ImagesRepository imagesRepository;
 
     @Autowired
-    private CommentsRepository commentsRepository;
+    CommentsRepository commentsRepository;
 
     @Autowired
-    private LikesRepository likesRepository;
+    LikesRepository likesRepository;
+
 
     @GetMapping("/home")
-    public ModelAndView home() {
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         ModelAndView viewModel = new ModelAndView("home");
+        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
+        viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
         return viewModel;
     }
 
-    @GetMapping("/")
-    public ModelAndView home2() {
-        ModelAndView viewModel = new ModelAndView("home");
-        return viewModel;
+    @PostMapping("/posts/{id}/comment")
+    public String addComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                             @PathVariable(value = "id") Integer id,
+                             @RequestParam("comment") String comment) {
+        if (comment != "") {
+            Comments comments = new Comments();
+            comments.setComment(comment);
+            comments.setImageId(id);
+            comments.setUserId(userDetails.getId());
+            comments.setUpdatedAt(LocalDateTime.now());
+            comments.setCreatedAt(LocalDateTime.now());
+            commentsRepository.save(comments);
+        }
+
+        return "redirect:/home";
     }
 
-    public String addLike(LikesRepository likesRepository) {
-        Likes likes = new Likes();
-        likes.setUpdatedAt(LocalDateTime.now());
-        likes.setCreatedAt(LocalDateTime.now());
-        likes.setImageId(23244);
-        likes.setUserId(24);
-        likes.incrementLikes(likes.getImageId());
-        System.out.println("Number of likes now: " + likes.getLikes(likes.getImageId()));
+    @PostMapping("/posts/{id}/like")
+    public String addLike(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                          @PathVariable(value = "id") Integer id) {
+        Likes like = new Likes();
+        like.setUserId(userDetails.getId());
+        like.setImageId(id);
+        like.setUpdatedAt(LocalDateTime.now());
+        like.setCreatedAt(LocalDateTime.now());
+        likesRepository.save(like);
 
-        likesRepository.save(likes);
-
-        return likes.toString();
-    }
-
-    public String addComment(CommentsRepository commentsRepository) {
-        Comments comments = new Comments();
-        comments.setComment("Test First Comment, woo!");
-        comments.setImageId(1);
-        comments.setUserId(1);
-        comments.setUpdatedAt(LocalDateTime.now());
-        comments.setCreatedAt(LocalDateTime.now());
-
-        commentsRepository.save(comments);
-
-        List<Comments> allComments = commentsRepository.findAll();
-
-        return allComments.toString();
+        return "redirect:/home";
     }
 }

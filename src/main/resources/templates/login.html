@@ -3,35 +3,42 @@
 
 <head>
     <head th:replace="fragments/header :: header"></head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Sign In</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M">
-    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Espy | Sign In</title>
 </head>
 <body>
-<div class="container">
-    <form class="form-signin" method="post" action="/login">
-        <h2 class="form-signin-heading">Sign In</h2>
-        <div th:if="${param.error}">
-            <div class="alert alert-danger">
-                Invalid username or password.
+<div class="container pt-5">
+    <div class="row d-flex justify-content-center align-items-center flex-column">
+        <div class="col-12 col-sm-8 col-md-4">
+            <div class="card">
+                <h1 class="card-title m-3 text-center">ESPY</h1>
+
+                <div class="card-text p-3">
+                    <form class="form-signin" method="post" action="/login">
+                        <h3 class="form-signin-heading">Sign In</h3>
+                        <div th:if="${param.error}">
+                            <div class="alert alert-danger">
+                                Invalid username or password.
+                            </div>
+                        </div>
+                        <p>
+                            <label for="username" class="sr-only">Username</label>
+                            <input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="Username" required autofocus>
+                        </p>
+                        <p>
+                            <label for="password" class="sr-only">Password</label>
+                            <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
+                        </p>
+                        <input name="_csrf" type="hidden" value="0ffaf2e7-808d-4116-b09a-88583f392db0" />
+                        <p class="text-end">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        </p>
+                        <p class="mt-2">Don't have an account? Register <a href="/register">here</a></p>
+                    </form>
+                </div>
             </div>
         </div>
-        <p>
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        </p>
-        <p>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        </p>
-        <input name="_csrf" type="hidden" value="0ffaf2e7-808d-4116-b09a-88583f392db0" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p class="mt-2">Don't have an account? Register <a href="/register">here</a></p>
-    </form>
+    </div>
 </div>
+
+<div th:replace="fragments/footer :: footer"></div>
 </body></html>
