@@ -3,12 +3,12 @@
 An image sharing application amongst friends
 
 Current pages include (https://):
-- localhost:8080/home
-- localhost:8080/profile/{id}
-- localhost:8080/friendsearch
-- localhost:8080/friend/{id}
-- localhost:8080/login
-- localhost:8080/register
+- https://localhost:8443/home
+- https://localhost:8443/profile
+- https://localhost:8443/friendsearch
+- https://localhost:8443/friend/{id}
+- https://localhost:8443/login
+- https://localhost:8443/register
 
 ### Documentation
 [Documentation](https://drive.google.com/file/d/1iz8zC2CdMfNpPhiBqdHCrULn53NWbbqh/view?usp=sharing)
