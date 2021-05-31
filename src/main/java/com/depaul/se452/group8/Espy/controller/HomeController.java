@@ -57,12 +57,14 @@ public class HomeController extends BaseController {
     @PostMapping("/posts/{id}/like")
     public String addLike(@AuthenticationPrincipal UserDetailsImpl userDetails,
                           @PathVariable(value = "id") Integer id) {
-        Likes like = new Likes();
-        like.setUserId(userDetails.getId());
-        like.setImageId(id);
-        like.setUpdatedAt(LocalDateTime.now());
-        like.setCreatedAt(LocalDateTime.now());
-        likesRepository.save(like);
+        if (likesRepository.findLikeByUserIdAndImageId(userDetails.getId(), id) == null) {
+            Likes like = new Likes();
+            like.setUserId(userDetails.getId());
+            like.setImageId(id);
+            like.setUpdatedAt(LocalDateTime.now());
+            like.setCreatedAt(LocalDateTime.now());
+            likesRepository.save(like);
+        }
 
         return "redirect:/home";
     }
@@ -70,12 +72,14 @@ public class HomeController extends BaseController {
     @PostMapping("/posts/{id}/favorite")
     public String addFavorite(@AuthenticationPrincipal UserDetailsImpl userDetails,
                           @PathVariable(value = "id") Integer id) {
-        Favorites favorite = new Favorites();
-        favorite.setUserId(userDetails.getId());
-        favorite.setImageId(id);
-        favorite.setUpdatedAt(LocalDateTime.now());
-        favorite.setCreatedAt(LocalDateTime.now());
-        favoritesRepository.save(favorite);
+        if (favoritesRepository.findFavoriteByUserIdAndImageId(userDetails.getId(), id) == null) {
+            Favorites favorite = new Favorites();
+            favorite.setUserId(userDetails.getId());
+            favorite.setImageId(id);
+            favorite.setUpdatedAt(LocalDateTime.now());
+            favorite.setCreatedAt(LocalDateTime.now());
+            favoritesRepository.save(favorite);
+        }
 
         return "redirect:/home";
     }

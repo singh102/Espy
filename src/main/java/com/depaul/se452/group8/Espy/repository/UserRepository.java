@@ -12,7 +12,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User getUserByUsername(String username);
 
-//    @Query(nativeQuery = true, value = "SELECT * FROM users WHERE LOWER(username) LIKE LOWER(?2) ORDER BY username ASC")
     List<User> findAllByUsernameContaining(String query);
 }
 
