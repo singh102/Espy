@@ -223,6 +223,9 @@ border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + post.imag
                     <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
 border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + favorite.image.imageBase64}}" data-holder-rendered="true">
                     <div class="card-body" style="height: 120px;">
+                        <p>
+                            <span class="badge rounded-pill bg-secondary" th:each="tag : ${favorite.image.allTags}" th:text="${tag.tag}" style="margin-right:6px;" />
+                        </p>
                         <p class="card-text" th:text="${favorite.image.caption}"></p>
                     </div>
                 </div>
