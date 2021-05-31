@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <html>
 
 <head>
@@ -32,12 +32,14 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="friend : ${user.allFriends}">
             <div class="col">
               <div class="card-body">
-                <img th:src="@{${friend.friend.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + friend.friend.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+                <img th:src="@{${friend.friend.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + friend.friend.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="128" height="128" />
                 <p class="card-text"><a th:text="${friend.friend.username}" /></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/friend/' + friend.friend.id}">profile</a></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
+                    <form class="d-flex" method="delete" action="#" th:action="@{'/friend/' + friend.friend.id}">
+                      <button type="submit" class="btn btn-sm btn-outline-secondary">remove</button>
+                    </form>
                   </div>
                   <small class="text-muted">online</small>
                 </div>
@@ -50,13 +52,17 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="requests : ${user.allRequests}">
           <div class="col">
             <div class="card-body">
-              <img th:src="@{${requests.requests.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+              <img th:src="@{${requests.requests.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="128" height="128" />
               <p class="card-text"><a th:text="${requsts.requests.username}" /></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/requests/' + requests.requests.id}">profile</a></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">accept</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/profile/' + requests.requests.id}">profile</a></button>
+                  <form class="d-flex" method="post" th:action="@{'/request/'+ requests.requests.id}">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">accept</button>
+                  </form>
+                  <form class="d-flex" method="delete" th:action="@{'/request/'+ requests.requests.id}">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">remove</button>
+                  </form>
                 </div>
                 <small class="text-muted">online</small>
               </div>
@@ -69,12 +75,14 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="requests : ${user.allBlocked}">
             <div class="col">
               <div class="card-body">
-                <img th:src="@{${blocked.blocked.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+                <img th:src="@{${blocked.blocked.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="128" height="128" />
                 <p class="card-text"><a th:text="${blocked.blocked.username}" /></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/requests/' + blocked.blocked.id}">profile</a></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">unblock</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/profile/' + blocked.blocked.id}">profile</a></button>
+                    <form class="d-flex" method="delete" th:action="@{'/blocked/' + blocked.blocked.id}">
+                      <button type="submit" class="btn btn-sm btn-outline-secondary">un-block</button>
+                    </form>
                 </div>
                 <small class="text-muted">online</small>
               </div>
