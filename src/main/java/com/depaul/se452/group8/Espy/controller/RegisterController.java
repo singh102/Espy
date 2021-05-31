@@ -1,8 +1,6 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.User;
-import com.depaul.se452.group8.Espy.service.ImageService;
-import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,18 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.io.IOException;
 
 @Controller
-public class RegisterController {
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ImageService imageService;
-
+public class RegisterController extends BaseController {
     @Autowired
     PasswordEncoder passwordEncoder;
 

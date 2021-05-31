@@ -12,7 +12,6 @@ import javax.validation.Valid;
 
 @Controller
 public class FriendsController extends BaseController {
-
     @Autowired
     private FriendsRepository friendsRepository;
 

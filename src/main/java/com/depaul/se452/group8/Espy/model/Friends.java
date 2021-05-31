@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "friends")
 public class Friends implements Serializable {
     @Id

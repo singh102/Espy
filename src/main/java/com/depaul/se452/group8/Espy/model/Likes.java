@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "likes")
 public class Likes implements Serializable {
     private static Integer currentLikes = 0;
