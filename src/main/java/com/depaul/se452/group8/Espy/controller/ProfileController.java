@@ -2,12 +2,7 @@ package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.User;
 import com.depaul.se452.group8.Espy.repository.FavoritesRepository;
-import com.depaul.se452.group8.Espy.service.ImageService;
-import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,29 +11,17 @@ import java.io.IOException;
 
 @Controller
 public class ProfileController extends BaseController {
-
     @Autowired
     FavoritesRepository favoritesRepository;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ImageService imageService;
-
-    @GetMapping("profile/{id}")
+    @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable(value = "id")Integer id) {
-        ModelAndView viewModel = new ModelAndView("profile");
-        if (!getSignedInUser().getId().equals(id)) {
-            viewModel.addObject("user", getSignedInUser());
-            viewModel.addObject("posts", imageService.getAllImagesByUserId(getSignedInUser().getId()));
-        }
-        else {
-            User user = userService.getUserById(id);
-            viewModel.addObject("user", user);
-            viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
-        }
-        return viewModel;
+        return getDifferenceInId(id, "profile");
+    }
+
+    @GetMapping("/profile")
+    public ModelAndView profileRedirect() {
+        return profile(getSignedInUser().getId());
     }
 
     @PostMapping("/saveProfile")

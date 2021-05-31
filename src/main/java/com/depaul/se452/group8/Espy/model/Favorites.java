@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "favorites")
 public class Favorites implements Serializable {
     private static Set<Integer> favs = new HashSet<Integer>();

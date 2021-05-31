@@ -15,16 +15,6 @@ import java.time.LocalDateTime;
 
 @Controller
 public class HomeController extends BaseController {
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ImageService imageService;
-
-    @Autowired
-    UserRepository userRepository;
-
     @Autowired
     FriendsRepository friendsRepository;
 
@@ -37,14 +27,9 @@ public class HomeController extends BaseController {
     @Autowired
     LikesRepository likesRepository;
 
-    @GetMapping("/")
-    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        ModelAndView viewModel = new ModelAndView("home");
-
-        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
-        viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
-
-        return viewModel;
+    @GetMapping("/home/{id}")
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "home");
     }
 
     @PostMapping("/posts/{id}/comment")
