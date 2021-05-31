@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Repository
 public interface ImagesRepository extends JpaRepository<Images, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM images WHERE user_id IN (SELECT friend_id FROM friends WHERE user_id=?1 OR friend_id=?1) ORDER BY created_at ASC")
+    @Query(nativeQuery = true, value = "SELECT * FROM images WHERE user_id IN (SELECT friend_id FROM friends WHERE user_id=?1 OR friend_id=?1) ORDER BY created_at DESC")
     Collection<Images> findByUserIds(Integer userId);
 }
 
