@@ -161,6 +161,28 @@
             </div>
         </div>
 
+
+        <div class="row" th:if="${directMessages != null}">
+            <div class="mt-4 mb-2">
+                <h4 class="mb-3">
+                    <i class="far fa-comments"></i> Your Direct Messages
+                </h4>
+            </div>
+            <div class="col-12 order-2">
+                <div th:each="directMessage : ${directMessages}" class="card mb-3">
+                    <div class="card-body text-left">
+                        <p class="small mb-2">
+                            <img th:src="@{${directMessage.user.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + directMessage.user.avatarImgBase64} : '/images/user.png'}" width="30" height="30" />
+                            <span th:text="${directMessage.user.username + ' said at ' + directMessage.createdAt + ':'  }" />
+                            <br />
+                            <br />
+                            <span th:text="${directMessage.message}" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="mt-4 mb-2">
                 <h4 class="mb-3">
@@ -198,5 +220,6 @@ border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + favorite.
             </div>
         </div>
     </div>
+
 </body>
 </html>
