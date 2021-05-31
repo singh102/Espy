@@ -26,4 +26,12 @@ public class Blocked implements Serializable {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "friend_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private User friend;
 }
