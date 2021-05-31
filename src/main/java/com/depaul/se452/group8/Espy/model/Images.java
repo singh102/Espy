@@ -16,6 +16,9 @@ import java.util.Set;
 @Table(name = "images")
 public class Images implements Serializable {
 
+    private Boolean liked = false;
+    private Boolean favorited = false;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -51,4 +54,20 @@ public class Images implements Serializable {
 
     @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorites> allFavorites = new ArrayList<>();
+
+    public Boolean setLiked(Boolean status) {
+        return this.liked = status;
+    }
+
+    public Boolean getLiked() {
+        return this.liked;
+    }
+
+    public Boolean setFavorited(Boolean status) {
+        return this.favorited = status;
+    }
+
+    public Boolean getFavorited() {
+        return this.favorited;
+    }
 }
