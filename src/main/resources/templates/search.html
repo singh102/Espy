@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <head th:replace="fragments/header :: header"></head>
+    <title>Espy | Search</title>
+</head>
+
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container p-4">
+    <div class="row d-flex justify-content-center align-items-center flex-column">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <div class="card">
+                <h2 class="card-title p-3">Friend Search Results</h2>
+
+                <form class="d-flex p-3" method="GET" action="/friendsearch/search">
+                    <input class="form-control me-2" type="text" name="query" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+                <div class="card-text p-3">
+                    <div class="row pt-3" th:if="${#lists.size(results) == 0}">
+                        <div class="col-10 text-secondary">
+                            <p>No results found.</p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-3" th:each="result : ${results}">
+                        <div class="col-2">
+                            <img th:src="@{${result.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + result.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="64" height="64" />
+                        </div>
+                        <div class="col-10 text-secondary">
+                            <a th:if="${result.id != SignedInUser.id}" th:href="${'/friend/' + result.id}" th:text="${result.username}" />
+                            <a th:if="${result.id == SignedInUser.id}" th:href="${'/profile'}" th:text="${result.username}" />
+                        </div>
+                    </div>
+
+                    <div class="row pt-3">
+                        <div class="col text-end">
+                            <a href="/home" class="btn btn-primary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

@@ -29,8 +29,13 @@ INSERT INTO comments (image_id, user_id, comment, created_at, updated_at) VALUES
 INSERT INTO friends (user_id, friend_id, created_at, updated_at) VALUES(1, 2, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
 INSERT INTO friends (user_id, friend_id, created_at, updated_at) VALUES(2, 1, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
 
+
+INSERT INTO favorites (image_id, user_id, created_at, updated_at) VALUES(1, 1, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
+INSERT INTO favorites (image_id, user_id, created_at, updated_at) VALUES(3, 2, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
+
 INSERT INTO direct_messages (created_at, message, recipient_id, updated_at, user_id) VALUES('2021-05-31 12:30:44.864012', 'Hey! How are you? Saw you recent posts, great images!', 2, '2021-05-31 12:30:44.864057', 1);
 
 INSERT INTO direct_messages (created_at, message, recipient_id, updated_at, user_id) VALUES('2021-05-31 12:30:44.864012', 'Great posts, keep it up!!', 1, '2021-05-31 12:30:44.864057', 2);
 
 INSERT INTO direct_messages (created_at, message, recipient_id, updated_at, user_id) VALUES('2021-05-31 12:35:44.864012', 'Really like the waterfall pic!', 1, '2021-05-31 12:30:44.864057', 2);
+

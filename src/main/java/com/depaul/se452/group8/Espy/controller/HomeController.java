@@ -1,6 +1,7 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.Comments;
+import com.depaul.se452.group8.Espy.model.Favorites;
 import com.depaul.se452.group8.Espy.model.Likes;
 import com.depaul.se452.group8.Espy.repository.*;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
@@ -25,6 +26,8 @@ public class HomeController extends BaseController {
     @Autowired
     LikesRepository likesRepository;
 
+    @Autowired
+    FavoritesRepository favoritesRepository;
 
     @GetMapping("/home")
     public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -54,12 +57,29 @@ public class HomeController extends BaseController {
     @PostMapping("/posts/{id}/like")
     public String addLike(@AuthenticationPrincipal UserDetailsImpl userDetails,
                           @PathVariable(value = "id") Integer id) {
-        Likes like = new Likes();
-        like.setUserId(userDetails.getId());
-        like.setImageId(id);
-        like.setUpdatedAt(LocalDateTime.now());
-        like.setCreatedAt(LocalDateTime.now());
-        likesRepository.save(like);
+        if (likesRepository.findLikeByUserIdAndImageId(userDetails.getId(), id) == null) {
+            Likes like = new Likes();
+            like.setUserId(userDetails.getId());
+            like.setImageId(id);
+            like.setUpdatedAt(LocalDateTime.now());
+            like.setCreatedAt(LocalDateTime.now());
+            likesRepository.save(like);
+        }
+
+        return "redirect:/home";
+    }
+
+    @PostMapping("/posts/{id}/favorite")
+    public String addFavorite(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                          @PathVariable(value = "id") Integer id) {
+        if (favoritesRepository.findFavoriteByUserIdAndImageId(userDetails.getId(), id) == null) {
+            Favorites favorite = new Favorites();
+            favorite.setUserId(userDetails.getId());
+            favorite.setImageId(id);
+            favorite.setUpdatedAt(LocalDateTime.now());
+            favorite.setCreatedAt(LocalDateTime.now());
+            favoritesRepository.save(favorite);
+        }
 
         return "redirect:/home";
     }

@@ -48,4 +48,7 @@ public class Images implements Serializable {
 
     @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comments> allComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorites> allFavorites = new ArrayList<>();
 }

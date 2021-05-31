@@ -1,14 +1,16 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
+import com.depaul.se452.group8.Espy.model.User;
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import com.depaul.se452.group8.Espy.model.Requests;
 import com.depaul.se452.group8.Espy.repository.RequestsRepository;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,5 +48,14 @@ public class FriendSearchController extends BaseController {
     @DeleteMapping("/requests/{id}")
     public void deleteRequest(@PathVariable Integer id) {
         requestsRepository.deleteById(id);
+    }
+
+    @GetMapping("/friendsearch/search")
+    public ModelAndView searchFriends(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                      @RequestParam String query) {
+        ModelAndView viewModel = new ModelAndView("search");
+        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
+        viewModel.addObject("results", userRepository.findAllByUsernameContaining(query));
+        return viewModel;
     }
 }
