@@ -14,7 +14,7 @@
                 <div class="card-body text-left">
                     <h6 class="card-title mb-2">
                         <img th:src="@{${'data:image/png;base64,' + post.user.avatarImgBase64}}" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
-                        <span class="pl-5 my-auto" th:text="${post.user.username}" />
+                        <a th:href="${'/friend/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
                     </h6>
 
                     <img th:src="@{${'data:image/png;base64,' + post.imageBase64}}" class="img-fluid rounded w-100 mb-2" />
@@ -67,8 +67,6 @@
 
                         <div class="col-12 col-sm-9">
                             <p class="mb-0"><a th:href="${'/profile/' + user.id}" th:text="${user.username}" /></p>
-<!--                            <p class="mb-0"><a href="#">Edit</a></p>-->
-<!--                            <p class="mb-0"><a href="#">Preferences</a></p>-->
                         </div>
                     </div>
 
@@ -82,48 +80,12 @@
                         </div>
                     </div>
 
-                    <div class="row pt-3">
+                    <div class="row pt-3" th:each="friend : ${user.allFriends}">
                         <div class="col-2">
-                            <img src="http://placeimg.com/64/64/people" class="img-fluid rounded" width="32" height="32" />
+                            <img th:src="@{${friend.friend.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + friend.friend.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
                         </div>
                         <div class="col-10 text-secondary">
-                            davidengel
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <img src="http://placeimg.com/65/65/people" class="img-fluid rounded" width="32" height="32" />
-                        </div>
-                        <div class="col-10 text-secondary">
-                            karthiksingh
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <img src="http://placeimg.com/66/66/people" class="img-fluid rounded" width="32" height="32" />
-                        </div>
-                        <div class="col-10 text-secondary">
-                            brandonwegner
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <img src="http://placeimg.com/67/67/people" class="img-fluid rounded" width="32" height="32" />
-                        </div>
-                        <div class="col-10 text-secondary">
-                            jakepeterson
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <img src="http://placeimg.com/68/68/people" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
-                        </div>
-                        <div class="col-10 text-secondary">
-                            zhaofengzhang
+                            <a th:href="${'/friend/' + friend.friend.id}" th:text="${friend.friend.username}" />
                         </div>
                     </div>
                 </div>
