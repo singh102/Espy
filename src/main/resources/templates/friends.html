@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <html>
-<head th:replace="fragments/header :: header"></head>
+<head>
+    <head th:replace="fragments/header :: header"></head>
+    <title>Espy | Friend</title>
+</head>
 
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
@@ -10,77 +13,18 @@
     <div class="container p-4">
 
         <!-- Modal -->
-        <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addDirectMessage" tabindex="-1" aria-labelledby="addDirectMessageLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editProfileModalLabel">Update Your Profile</h5>
+                        <h5 class="modal-title" id="addDirectMessageLabel" th:text="${'Send Message to ' + user.username}"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" th:action="@{/saveProfile}" method="post" th:object="${user}" enctype="multipart/form-data">
-                            <input type="hidden" th:field="*{id}" id="id"/>
-                            <h7 class="modal-title">Choose Avatar Image:</h7>
-                            <div class="form-group">
-                                <input type="file" id="profileAvatar" class="form-control" name="profileAvatar"/>
-                            </div>
-                            <hr>
-                            <h7 class="modal-title">Username & Password:</h7>
-                            <div class="form-group">
-                                <input type="text" id="username" class="form-control mt-2 mb-2" placeholder="Username" th:field="*{username}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" id="password" class="form-control mt-2 mb-2" placeholder="Password" name="password" th:value="*{plainPassword}"/>
-                            </div>
-                            <hr>
-                            <h7 class="modal-title">Bio Info:</h7>
-                            <div class="form-group">
-                                <input type="text" id="firstname" class="form-control mt-2 mb-2" placeholder="First Name" th:field="*{firstName}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="lastname" class="form-control mt-2 mb-2" placeholder="Last Name" th:field="*{lastName}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="email" class="form-control mt-2 mb-2" placeholder="Email" th:field="*{email}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="phone" class="form-control mt-2 mb-2" placeholder="Phone" th:field="*{phone}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="mobile" class="form-control mt-2 mb-2" placeholder="Mobile" th:field="*{mobile}"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="address" class="form-control mt-2 mb-2" placeholder="Address" th:field="*{address}"/>
-                            </div>
-                            <div class="form-group">
-                                <textarea id="bio" placeholder="Bio" class="mt-2 mb-2" th:field="*{bio}"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="addImageComment" tabindex="-1" aria-labelledby="addImageCommentLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addImageCommentLabel">Add Post</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" th:action="@{/addImageComment}" method="post" enctype="multipart/form-data">
+                        <form action="#" th:action="@{/saveDirectMessage}" method="post" enctype="multipart/form-data">
                             <input type="hidden" th:field="${user.id}"/>
                             <div class="form-group">
-                                <label for="imagePost">Upload Image</label>
-                                <input type="file" id="imagePost" class="form-control" name="imagePost"/>
-                            </div>
-                            <div class="form-group">
-                                <textarea placeholder="Caption" class="mt-2 mb-2" name="caption"></textarea>
+                                <textarea placeholder="Direct Message" class="mt-2 mb-2" name="directmessage"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -98,6 +42,9 @@
                     <div class="card-body text-center">
                         <img th:src="@{${user.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + user.avatarImgBase64} : '/images/user.png'}" class="img-fluid mb-2" width="128" height="128">
                         <h4 class="card-title mb-0" th:text="${user.username}"></h4>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#addDirectMessage">
+                            <img src="/images/messenger.png" height="20px;">
+                        </a>
                     </div>
                 </div>
             </div>

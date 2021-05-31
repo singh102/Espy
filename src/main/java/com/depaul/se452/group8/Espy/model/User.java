@@ -72,8 +72,15 @@ public class User implements Serializable {
     private List<Friends> allFriends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    private List<Favorites> allFavorites = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DirectMessages> allDirectMessages = new ArrayList<>();
+
     private List<Blocked> allBlocked = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Requests> allRequests = new ArrayList<>();
+
 }

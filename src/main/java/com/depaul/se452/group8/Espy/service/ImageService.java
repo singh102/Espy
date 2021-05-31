@@ -16,14 +16,14 @@ public class ImageService {
     @Autowired
     private ImagesRepository imagesRepository;
 
-    public void addImageAndCaptionToUser(Integer userId, MultipartFile imageFile, String caption) throws IOException {
+    public Images addImageAndCaptionToUser(Integer userId, MultipartFile imageFile, String caption) throws IOException {
         Images images = new Images();
         images.setCaption(caption);
         images.setImageBase64(convertByteArrayToBase64String(imageFile.getBytes()));
         images.setUserId(userId);
         images.setCreatedAt(LocalDateTime.now());
         images.setUpdatedAt(LocalDateTime.now());
-        imagesRepository.save(images);
+        return imagesRepository.save(images);
     }
 
     public List<Images> getAllImagesByUserId(Integer userId) {

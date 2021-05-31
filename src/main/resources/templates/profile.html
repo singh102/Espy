@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <html>
-<head th:replace="fragments/header :: header"></head>
+<head>
+    <head th:replace="fragments/header :: header"></head>
+    <title>Espy | Profile</title>
+</head>
 
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
@@ -82,6 +85,9 @@
                             <div class="form-group">
                                 <textarea placeholder="Caption" class="mt-2 mb-2" name="caption"></textarea>
                             </div>
+                            <div class="form-group">
+                                <input type="text" name="tags" placeholder="Tags (separate by commas)" />
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -160,23 +166,69 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="row" th:if="${directMessages != null}">
+            <div class="mt-4 mb-2">
+                <h4 class="mb-3">
+                    <i class="far fa-comments"></i> Your Direct Messages
+                </h4>
+            </div>
+            <div class="col-12 order-2">
+                <div th:each="directMessage : ${directMessages}" class="card mb-3">
+                    <div class="card-body text-left">
+                        <p class="small mb-2">
+                            <img th:src="@{${directMessage.user.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + directMessage.user.avatarImgBase64} : '/images/user.png'}" width="30" height="30" />
+                            <span th:text="${directMessage.user.username + ' said at ' + directMessage.createdAt + ':'  }" />
+                            <br />
+                            <br />
+                            <span th:text="${directMessage.message}" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="mt-4 mb-2">
-                <h4 class="mb-3">Your Images</h4>
+                <h4 class="mb-3">
+                    <i class="fas fa-camera-retro"></i> Your Images
+                </h4>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageComment">
                     Upload Image and Caption
                 </button>
             </div>
-            <div class="col-3" th:each="post : ${posts}">
-                <div class="card mt-2" style="width: 18rem; border-radius: 20px;">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="post : ${posts}">
+                <div class="card mt-2" style="width: 100%; border-radius: 20px;">
                     <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
 border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + post.imageBase64}}" data-holder-rendered="true">
-                    <div class="card-body" style="height: 80px;">
+                    <div class="card-body" style="height: 120px;">
+                        <p>
+                            <span class="badge rounded-pill bg-secondary" th:each="tag : ${post.allTags}" th:text="${tag.tag}" style="margin-right:6px;" />
+                        </p>
                         <p class="card-text" th:text="${post.caption}"></p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="mt-4 mb-2">
+                <h4 class="mb-1">
+                    <i class="far fa-heart"></i> Your Favorites
+                </h4>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="favorite : ${user.allFavorites}">
+                <div class="card mt-2" style="width: 100%; border-radius: 20px;">
+                    <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
+border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + favorite.image.imageBase64}}" data-holder-rendered="true">
+                    <div class="card-body" style="height: 120px;">
+                        <p class="card-text" th:text="${favorite.image.caption}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>
