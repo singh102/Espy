@@ -1,259 +1,135 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<html>
-<head th:replace="fragments/header :: header"></head>
+<head th:replace="fragments/header :: header" />
 
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-    <div class="container p-4">
-        <div class="row">
-            <!-- Images -->
-            <div class="col-12 col-lg-7 col-xl-8 order-2 order-md-1">
-                <!-- Example -->
-                <div class="card mb-3">
-                    <div class="card-body text-left">
-                        <h6 class="card-title mb-2">
-                            <img src="http://placeimg.com/64/64/people" class="img-fluid rounded-circle mb-2 mr-3" width="32" height="32" />
-                            <span class="pl-5 my-auto">davidengel</span>
-                        </h6>
+<div class="container p-4">
+    <div class="row">
+        <!-- Feed -->
+        <div class="col-12 col-lg-7 col-xl-8 order-2 order-sm-1">
+            <div th:each="post : ${posts}"  class="card mb-3">
+                <div class="card-body text-left">
+                    <h6 class="card-title mb-2">
+                        <img th:src="@{${'data:image/png;base64,' + post.user.avatarImgBase64}}" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
+                        <span class="pl-5 my-auto" th:text="${post.user.username}" />
+                    </h6>
 
-                        <img src="http://placeimg.com/640/360/nature" class="w-100 mb-2" />
+                    <img th:src="@{${'data:image/png;base64,' + post.imageBase64}}" class="img-fluid rounded w-100 mb-2" />
 
-                        <p class="small">
-                            <a href="#" class="mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
-                            </a>
-                            52 Likes
-                        </p>
+                    <p class="small">
+                        <form method="post" th:action="${'/posts/' + post.id + '/like'}">
+                            <button type="submit" class="btn btn-link d-inline align-middle p-0">
+                                <i class="far fa-heart"></i>
+                            </button>
 
-                        <p class="mb-2">Went on a hike!</p>
+                            <span class="d-inline align-middle">
+                                <span th:text="${#lists.size(post.allLikes)}" />
+                                <span th:if="${#lists.size(post.allLikes) != 1}" th:text="${' Likes'}" />
+                                <span th:if="${#lists.size(post.allLikes) == 1}" th:text="${' Like'}" />
+                            </span>
+                        </form>
+                    </p>
 
-                        <p>
-                            <span class="badge rounded-pill bg-secondary">nature</span>
-                            <span class="badge rounded-pill bg-secondary">photography</span>
-                            <span class="badge rounded-pill bg-secondary">hiking</span>
-                        </p>
+                    <p class="mb-2" th:text="${post.caption}" />
 
-                        <h6>Comments</h6>
-                        <p class="small mb-2">
-                            <img src="http://placeimg.com/32/32/people" class="img-fluid rounded-circle mb-2 mr-3" width="16" height="16" />
-                            <span class="pl-5 fw-bolder">user1</span>
-                            <br />
-                            Wow! This looks amazing!
-                        </p>
-                        <p class="small mb-0">
-                            <img src="http://placeimg.com/33/33/people" class="img-fluid rounded-circle mb-2 mr-3" width="16" height="16" />
-                            <span class="pl-5 fw-bolder">user2</span>
-                            <br />
-                            Looks fun!
-                        </p>
-                    </div>
-                </div>
+                    <p>
+                        <span class="badge rounded-pill bg-secondary" th:each="tag : ${post.allTags}" th:text="${tag.tag}" style="margin-right:6px;" />
+                    </p>
 
-                <!-- Example -->
-                <div class="card mb-3">
-                    <div class="card-body text-left">
-                        <h6 class="card-title mb-2">
-                            <img src="http://placeimg.com/65/65/people" class="img-fluid rounded-circle mb-2 mr-3" width="32" height="32" />
-                            <span class="pl-5 my-auto">karthiksingh</span>
-                        </h6>
+                    <h6>Comments</h6>
 
-                        <img src="http://placeimg.com/640/360/animals" class="w-100 mb-2" />
+                    <p class="small mb-2" th:each="comment : ${post.allComments}">
+                        <img th:src="@{${'data:image/png;base64,' + comment.user.avatarImgBase64}}" width="16" height="16" />
+                        <span class="pl-5 fw-bolder" th:text="${comment.user.username}" />
+                        <br />
+                        <span th:text="${comment.comment}" />
+                    </p>
 
-                        <p class="small">
-                            <a href="#" class="mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
-                            </a>
-                            101 Likes
-                        </p>
-
-                        <p class="mb-2">I love animals!</p>
-
-                        <p>
-                            <span class="badge rounded-pill bg-secondary">animals</span>
-                            <span class="badge rounded-pill bg-secondary">adorable</span>
-                        </p>
-
-                        <h6>Comments</h6>
-                        <p class="small mb-2">
-                            <img src="http://placeimg.com/34/34/people" class="img-fluid rounded-circle mb-2 mr-3" width="16" height="16" />
-                            <span class="pl-5 fw-bolder">user1</span>
-                            <br />
-                            So cute!
-                        </p>
-                        <p class="small mb-0">
-                            <img src="http://placeimg.com/35/35/people" class="img-fluid rounded-circle mb-2 mr-3" width="16" height="16" />
-                            <span class="pl-5 fw-bolder">user2</span>
-                            <br />
-                            Beautiful!
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Example -->
-                <div class="card mb-3">
-                    <div class="card-body text-left">
-                        <h6 class="card-title mb-2">
-                            <img src="http://placeimg.com/66/66/people" class="img-fluid rounded-circle mb-2 mr-3" width="32" height="32" />
-                            <span class="pl-5 my-auto">brandonwegner</span>
-                        </h6>
-
-                        <img src="http://placeimg.com/640/360/arch" class="w-100 mb-2" />
-
-                        <p class="small">
-                            <a href="#" class="mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
-                            </a>
-                            37 Likes
-                        </p>
-
-                        <p class="mb-2">Saw this today and had to share.</p>
-
-                        <p>
-                            <span class="badge rounded-pill bg-secondary">architecture</span>
-                            <span class="badge rounded-pill bg-secondary">photography</span>
-                            <span class="badge rounded-pill bg-secondary">buildings</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Example -->
-                <div class="card mb-3">
-                    <div class="card-body text-left">
-                        <h6 class="card-title mb-2">
-                            <img src="http://placeimg.com/67/67/people" class="img-fluid rounded-circle mb-2 mr-3" width="32" height="32" />
-                            <span class="pl-5 my-auto">jakepeterson</span>
-                        </h6>
-
-                        <img src="http://placeimg.com/640/360/tech" class="w-100 mb-2" />
-
-                        <p class="small">
-                            <a href="#" class="mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
-                            </a>
-                            18 Likes
-                        </p>
-
-                        <p class="mb-2">Excited for this!</p>
-
-                        <p>
-                            <span class="badge rounded-pill bg-secondary">tech</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Example -->
-                <div class="card mb-3">
-                    <div class="card-body text-left">
-                        <h6 class="card-title mb-2">
-                            <img src="http://placeimg.com/68/68/people" class="img-fluid rounded-circle mb-2 mr-3" width="32" height="32" />
-                            <span class="pl-5 my-auto">zhaofengzhang</span>
-                        </h6>
-
-                        <img src="http://placeimg.com/640/360/people" class="w-100 mb-2" />
-
-                        <p class="small">
-                            <a href="#" class="mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
-                            </a>
-                            99 Likes
-                        </p>
-
-                        <p class="mb-2">Happy to have you as a friend!</p>
-
-                        <p>
-                            <span class="badge rounded-pill bg-secondary">people</span>
-                        </p>
-                    </div>
+                    <form class="d-flex" method="post" th:action="${'/posts/' + post.id + '/comment'}">
+                        <input class="form-control" type="text" name="comment" placeholder="Comment" aria-label="comment" style="margin-right: 6px;">
+                        <button class="btn btn-outline-primary" type="submit">Comment</button>
+                    </form>
                 </div>
             </div>
+        </div>
 
-            <!-- Friends -->
-            <div class="col-12 col-lg-5 col-xl-4 order-1 order-md-2">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row border-bottom mb-2 p-3">
-                            <div class="col-12 col-sm-3 p-1">
-                                <img src="http://placeimg.com/128/128/people" class="img-fluid rounded-circle mb-2 mr-3 w-100 mx-auto" style="max-width: 200px;" />
-                            </div>
-
-                            <div class="col-12 col-sm-9">
-                                <p class="mb-0"><a href="#">davidengel</a></p>
-                                <p class="mb-0"><a href="#">Edit</a></p>
-                                <p class="mb-0"><a href="#">Preferences</a></p>
-                            </div>
+        <!-- Friends -->
+        <div class="col-12 col-lg-5 col-xl-4 order-1 order-sm-2">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row border-bottom mb-2 p-3">
+                        <div class="col-12 col-sm-3 p-1">
+                            <img th:src="@{${user.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + user.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded mb-2 mr-3 w-100 h-auto mx-auto" style="max-width: 200px;" />
                         </div>
 
-                        <div class="row border-bottom mb-2 p-3">
-                            <div class="col text-center">
-                                <h4>Friends</h4>
-                                <form class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </form>
-                            </div>
+                        <div class="col-12 col-sm-9">
+                            <p class="mb-0"><a th:href="${'/profile/' + user.id}" th:text="${user.username}" /></p>
+<!--                            <p class="mb-0"><a href="#">Edit</a></p>-->
+<!--                            <p class="mb-0"><a href="#">Preferences</a></p>-->
                         </div>
+                    </div>
 
-                        <div class="row pt-3">
-                            <div class="col-2">
-                                <img src="http://placeimg.com/64/64/people" class="img-fluid rounded-circle" width="32" height="32" />
-                            </div>
-                            <div class="col-10 text-secondary">
-                                davidengel
-                            </div>
+                    <div class="row border-bottom mb-2 p-3">
+                        <div class="col text-center">
+                            <h4>Friends</h4>
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="http://placeimg.com/65/65/people" class="img-fluid rounded-circle" width="32" height="32" />
-                            </div>
-                            <div class="col-10 text-secondary">
-                                karthiksingh
-                            </div>
+                    </div>
+
+                    <div class="row pt-3">
+                        <div class="col-2">
+                            <img src="http://placeimg.com/64/64/people" class="img-fluid rounded" width="32" height="32" />
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="http://placeimg.com/66/66/people" class="img-fluid rounded-circle" width="32" height="32" />
-                            </div>
-                            <div class="col-10 text-secondary">
-                                brandonwegner
-                            </div>
+                        <div class="col-10 text-secondary">
+                            davidengel
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="http://placeimg.com/67/67/people" class="img-fluid rounded-circle" width="32" height="32" />
-                            </div>
-                            <div class="col-10 text-secondary">
-                                jakepeterson
-                            </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="http://placeimg.com/65/65/people" class="img-fluid rounded" width="32" height="32" />
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="http://placeimg.com/68/68/people" class="img-fluid rounded-circle mb-2 mr-3" width="32" height="32" />
-                            </div>
-                            <div class="col-10 text-secondary">
-                                zhaofengzhang
-                            </div>
+                        <div class="col-10 text-secondary">
+                            karthiksingh
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="http://placeimg.com/66/66/people" class="img-fluid rounded" width="32" height="32" />
+                        </div>
+                        <div class="col-10 text-secondary">
+                            brandonwegner
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="http://placeimg.com/67/67/people" class="img-fluid rounded" width="32" height="32" />
+                        </div>
+                        <div class="col-10 text-secondary">
+                            jakepeterson
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="http://placeimg.com/68/68/people" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
+                        </div>
+                        <div class="col-10 text-secondary">
+                            zhaofengzhang
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

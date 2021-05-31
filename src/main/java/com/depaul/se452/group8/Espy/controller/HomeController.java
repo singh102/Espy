@@ -1,68 +1,82 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.Comments;
+import com.depaul.se452.group8.Espy.model.Images;
 import com.depaul.se452.group8.Espy.model.Likes;
-import com.depaul.se452.group8.Espy.repository.CommentsRepository;
-import com.depaul.se452.group8.Espy.repository.LikesRepository;
-import com.depaul.se452.group8.Espy.repository.UserRepository;
+import com.depaul.se452.group8.Espy.model.User;
+import com.depaul.se452.group8.Espy.repository.*;
+import com.depaul.se452.group8.Espy.service.ImageService;
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
+import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-public class HomeController {
+public class HomeController extends BaseController {
 
     @Autowired
-    private UserRepository userRepository;
+    UserService userService;
 
     @Autowired
-    private CommentsRepository commentsRepository;
+    ImageService imageService;
 
     @Autowired
-    private LikesRepository likesRepository;
+    FriendsRepository friendsRepository;
 
-    @GetMapping("/home")
-    public ModelAndView home() {
-        ModelAndView viewModel = new ModelAndView("home");
-        return viewModel;
-    }
+    @Autowired
+    ImagesRepository imagesRepository;
+
+    @Autowired
+    CommentsRepository commentsRepository;
+
+    @Autowired
+    LikesRepository likesRepository;
 
     @GetMapping("/")
-    public ModelAndView home2() {
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         ModelAndView viewModel = new ModelAndView("home");
+        viewModel.addObject("user", userDetails.getUserDetails());
+        viewModel.addObject("posts", imageService.getAllImagesByUserId(userDetails.getId()));
+
         return viewModel;
     }
 
-    public String addLike(LikesRepository likesRepository) {
-        Likes likes = new Likes();
-        likes.setUpdatedAt(LocalDateTime.now());
-        likes.setCreatedAt(LocalDateTime.now());
-        likes.setImageId(23244);
-        likes.setUserId(24);
-        likes.incrementLikes(likes.getImageId());
-        System.out.println("Number of likes now: " + likes.getLikes(likes.getImageId()));
+    @PostMapping("/posts/{id}/comment")
+    public String addComment(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                             @PathVariable(value = "id") Integer id,
+                             @RequestParam("comment") String comment) {
+        if (comment != "") {
+            Comments comments = new Comments();
+            comments.setComment(comment);
+            comments.setImageId(id);
+            comments.setUserId(userDetails.getId());
+            comments.setUpdatedAt(LocalDateTime.now());
+            comments.setCreatedAt(LocalDateTime.now());
+            commentsRepository.save(comments);
+        }
 
-        likesRepository.save(likes);
-
-        return likes.toString();
+        return "redirect:/";
     }
 
-    public String addComment(CommentsRepository commentsRepository) {
-        Comments comments = new Comments();
-        comments.setComment("Test First Comment, woo!");
-        comments.setImageId(1);
-        comments.setUserId(1);
-        comments.setUpdatedAt(LocalDateTime.now());
-        comments.setCreatedAt(LocalDateTime.now());
+    @PostMapping("/posts/{id}/like")
+    public String addLike(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                          @PathVariable(value = "id") Integer id) {
+        Likes like = new Likes();
+        like.setUserId(userDetails.getId());
+        like.setImageId(id);
+        like.setUpdatedAt(LocalDateTime.now());
+        like.setCreatedAt(LocalDateTime.now());
+        likesRepository.save(like);
 
-        commentsRepository.save(comments);
-
-        List<Comments> allComments = commentsRepository.findAll();
-
-        return allComments.toString();
+        return "redirect:/";
     }
 }
