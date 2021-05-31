@@ -30,4 +30,11 @@ public class DirectMessages implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipient_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private User recipient;
 }
