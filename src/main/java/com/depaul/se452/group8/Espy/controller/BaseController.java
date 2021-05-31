@@ -1,6 +1,7 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.User;
+import com.depaul.se452.group8.Espy.repository.ImagesRepository;
 import com.depaul.se452.group8.Espy.repository.UserRepository;
 import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
@@ -21,6 +22,9 @@ public class BaseController {
     ImageService imageService;
 
     @Autowired
+    ImagesRepository imagesRepository;
+
+    @Autowired
     UserRepository userRepository;
 
     @ModelAttribute("SignedInUser")
@@ -35,17 +39,15 @@ public class BaseController {
     }
 
     @ModelAttribute("SignedInUser")
-    public ModelAndView getDifferenceInId(Integer id, String path) {
+    public ModelAndView getDifferenceInId(Integer id, String path, UserDetailsImpl details) {
         ModelAndView viewModel = new ModelAndView(path);
         if (!getSignedInUser().getId().equals(id)) {
-            User user = userService.getUserById(getSignedInUser().getId());
-            viewModel.addObject("user", user);
-            viewModel.addObject("posts", imageService.getAllImagesByUserId(getSignedInUser().getId()));
+            viewModel.addObject("user", userService.getUserById(details.getId()));
+            viewModel.addObject("posts", imagesRepository.findByUserIds(details.getId()));
             return viewModel;
         } else {
-            User user = userService.getUserById(id);
-            viewModel.addObject("user", user);
-            viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
+            viewModel.addObject("user", userService.getUserById(details.getId()));
+            viewModel.addObject("posts", imagesRepository.findByUserIds(details.getId()));
             return viewModel;
         }
     }

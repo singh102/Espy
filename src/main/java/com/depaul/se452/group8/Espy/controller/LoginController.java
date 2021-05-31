@@ -15,7 +15,7 @@ public class LoginController extends BaseController {
     @GetMapping("/login")
     public String checkLogin() {
         if (getSignedInUser() == null) {
-            return "login";
+            return "/login";
         } else {
             return redirectLogin(getSignedInUser().getId());
         }
