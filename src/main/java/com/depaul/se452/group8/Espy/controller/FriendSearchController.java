@@ -47,8 +47,10 @@ public class FriendSearchController extends BaseController {
     public Requests getRequestByFriendID(@PathVariable Integer id) {
         return requestsRepository.findById(id).get();
     }
-    @PostMapping("/requests{id}")
-    public String addFriend(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid Requests request) {
+    @PostMapping("/requests/{id}")
+    public String addFriend(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer id) {
+        Requests request = requestsRepository.findById(id).get();
+
         Friends friends = new Friends();
         friends.setFriendId(request.getFriendId());
         friends.setUserId(userDetails.getId());

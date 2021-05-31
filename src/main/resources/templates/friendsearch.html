@@ -37,8 +37,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/friend/' + friend.friend.id}">profile</a></button>
-                    <form class="d-flex" method="post" action="#" th:action="@{/deleteFriend}">
-<!--                      <input type="hidden" th:field="${friend.friend.id}"/>-->
+                    <form class="d-flex" method="delete" action="#" th:action="@{'/friend/' + friend.friend.id}">
                       <button type="submit" class="btn btn-sm btn-outline-secondary">remove</button>
                     </form>
                   </div>
@@ -58,8 +57,10 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/profile/' + requests.requests.id}">profile</a></button>
-                  <button type="submit" class="btn btn-sm btn-outline-secondary">accept</button>
-                  <form class="d-flex" method="post" th:action="@{/deleteRequest}">
+                  <form class="d-flex" method="post" th:action="@{'/request/'+ requests.requests.id}">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">accept</button>
+                  </form>
+                  <form class="d-flex" method="delete" th:action="@{'/request/'+ requests.requests.id}">
                     <button type="submit" class="btn btn-sm btn-outline-secondary">remove</button>
                   </form>
                 </div>
@@ -79,7 +80,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/profile/' + blocked.blocked.id}">profile</a></button>
-                    <form class="d-flex" method="post" th:action="@{/unBlock}">
+                    <form class="d-flex" method="delete" th:action="@{'/blocked/' + blocked.blocked.id}">
                       <button type="submit" class="btn btn-sm btn-outline-secondary">un-block</button>
                     </form>
                 </div>
