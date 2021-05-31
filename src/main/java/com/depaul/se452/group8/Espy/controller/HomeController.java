@@ -48,7 +48,7 @@ public class HomeController extends BaseController {
             commentsRepository.save(comments);
         }
 
-        return "redirect:/home/" + getSignedInUser().getId();
+        return "redirect:/home";
     }
 
     @PostMapping("/posts/{id}/like")
@@ -61,6 +61,6 @@ public class HomeController extends BaseController {
         like.setCreatedAt(LocalDateTime.now());
         likesRepository.save(like);
 
-        return "redirect:/home/" + getSignedInUser().getId();
+        return "redirect:/home";
     }
 }

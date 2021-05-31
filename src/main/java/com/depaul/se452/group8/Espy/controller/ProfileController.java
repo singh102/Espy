@@ -18,7 +18,7 @@ public class ProfileController extends BaseController {
 
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "profile");
+        return getDifferenceInId(id, "/profile");
     }
 
     @GetMapping("/profile")
