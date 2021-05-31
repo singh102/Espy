@@ -8,142 +8,83 @@
 </head>
 
 <body>
-  <div th:replace="fragments/navbar :: navbar"></div>
-    <div id= "main_content">
-      <p></p>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container p-4">
+  <nav class="profile-header">
+    <div class="profile-header-tab nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link active" id="nav-friends-tab" data-bs-toggle="tab" data-bs-target="#nav-friends" type="button" role="tab" aria-controls="nav-friends" aria-selected="true">FRIENDS</button>
+      <button class="nav-link" id="nav-pending-tab" data-bs-toggle="tab" data-bs-target="#nav-pending" type="button" role="tab" aria-controls="nav-pending" aria-selected="false">PENDING</button>
+      <button class="nav-link" id="nav-blocked-tab" data-bs-toggle="tab" data-bs-target="#nav-blocked" type="button" role="tab" aria-controls="nav-blocked" aria-selected="false">BLOCKED</button>
     </div>
-  <div class="profile-header">
-    <ul class="profile-header-tab nav nav-tabs">
-      <li class="nav-item"><a href="" class="nav-link active show" data-toggle="tab">FRIENDS</a></li>
-      <li class="nav-item"><a href="" class="nav-link" data-toggle="tab">PENDING</a></li>
-      <li class="nav-item"><a href="" class="nav-link" data-toggle="tab">BLOCKED</a></li>
-    </ul>
-  </div>
+  </nav>
+
   <div class="album py-5 bg-light">
     <div class="container">
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+      <form class="col-12 col-lg-auto p-3 mb-lg-0">
+        <div class="form-group">
+          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </div>
       </form>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
+      <!--Tabs-->
+      <div class="tab-content" id="nav-tabContent">
+        <!--friends tab-->
+        <div id="nav-friends" role="tabpanel" aria-labelledby="nav-friends-tab" class="container tab-pane fade show active"><br>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="friend : ${user.allFriends}">
+            <div class="col">
+              <div class="card-body">
+                <img th:src="@{${friend.friend.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + friend.friend.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+                <p class="card-text"><a th:text="${friend.friend.username}" /></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/friend/' + friend.friend.id}">profile</a></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
+                  </div>
+                  <small class="text-muted">online</small>
+                </div>
               </div>
-              <small class="text-muted">online</small>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
-              <small class="text-muted">online</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
-              <small class="text-muted">online</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
+        <!--pending friend requests tab-->
+        <div id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab" class="container tab-pane fade"><br>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="requests : ${user.allRequests}">
+          <div class="col">
+            <div class="card-body">
+              <img th:src="@{${requests.requests.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+              <p class="card-text"><a th:text="${requsts.requests.username}" /></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/requests/' + requests.requests.id}">profile</a></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">accept</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
+                </div>
                 <small class="text-muted">online</small>
               </div>
             </div>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
-              <small class="text-muted">online</small>
-            </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
-              <small class="text-muted">online</small>
             </div>
-          </div>
         </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
+        <!--blocked users tab-->
+        <div id="nav-blocked" role="tabpanel" aria-labelledby="nav-blocked-tab" class="container tab-pane fade"><br>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="requests : ${user.allBlocked}">
+            <div class="col">
+              <div class="card-body">
+                <img th:src="@{${blocked.blocked.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+                <p class="card-text"><a th:text="${blocked.blocked.username}" /></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/requests/' + blocked.blocked.id}">profile</a></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">unblock</button>
+                </div>
+                <small class="text-muted">online</small>
               </div>
-              <small class="text-muted">online</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
-              <small class="text-muted">online</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <img src="images/user.png" class="img-fluid rounded-circle mb-2" width="64" height="64">
-            <p class="card-text">friend</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-              </div>
-              <small class="text-muted">online</small>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>
