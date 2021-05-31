@@ -2,11 +2,11 @@
 
 An image sharing application amongst friends
 
-Current pages include:
-- localhost:8080
+Current pages include (https://):
+- localhost:8080/home
 - localhost:8080/profile/{id}
 - localhost:8080/friendsearch
-- localhost:8080/friends/{id}
+- localhost:8080/friend/{id}
 - localhost:8080/login
 - localhost:8080/register
 
