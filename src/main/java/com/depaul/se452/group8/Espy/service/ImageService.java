@@ -29,7 +29,7 @@ public class ImageService {
     public List<Images> getAllImagesByUserId(Integer userId) {
         List<Images> filteredImages = new ArrayList<>();
         for (Images image: imagesRepository.findAll()) {
-            if (image.getUserId() == userId)
+            if (image.getUserId().equals(userId))
                 filteredImages.add(image);
         }
         return filteredImages;

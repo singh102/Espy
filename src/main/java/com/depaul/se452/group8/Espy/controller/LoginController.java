@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController extends BaseController {
     @GetMapping("/")
     public String redirectAfterLogin() {
-        return "redirect:/home/" + getSignedInUser().getId();
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
