@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class ImageService {
         images.setCaption(caption);
         images.setImageBase64(convertByteArrayToBase64String(imageFile.getBytes()));
         images.setUserId(userId);
+        images.setCreatedAt(LocalDateTime.now());
+        images.setUpdatedAt(LocalDateTime.now());
         imagesRepository.save(images);
     }
 
