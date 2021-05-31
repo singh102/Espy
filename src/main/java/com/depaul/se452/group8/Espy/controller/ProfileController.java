@@ -29,12 +29,12 @@ public class ProfileController extends BaseController {
     @GetMapping("profile/{id}")
     public ModelAndView profile(@PathVariable(value = "id")Integer id) {
         ModelAndView viewModel = new ModelAndView("profile");
-        User user = userService.getUserById(id);
-        if (getSignedInUser().getId() != id) {
+        if (!getSignedInUser().getId().equals(id)) {
             viewModel.addObject("user", getSignedInUser());
             viewModel.addObject("posts", imageService.getAllImagesByUserId(getSignedInUser().getId()));
         }
         else {
+            User user = userService.getUserById(id);
             viewModel.addObject("user", user);
             viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
         }
