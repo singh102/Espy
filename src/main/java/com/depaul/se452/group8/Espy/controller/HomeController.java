@@ -1,30 +1,18 @@
 package com.depaul.se452.group8.Espy.controller;
 
-import com.depaul.se452.group8.Espy.model.*;
+import com.depaul.se452.group8.Espy.model.Comments;
+import com.depaul.se452.group8.Espy.model.Likes;
 import com.depaul.se452.group8.Espy.repository.*;
-import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
-import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.time.LocalDateTime;
 
 @Controller
 public class HomeController extends BaseController {
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ImageService imageService;
-
-    @Autowired
-    UserRepository userRepository;
-
     @Autowired
     FriendsRepository friendsRepository;
 
@@ -37,14 +25,9 @@ public class HomeController extends BaseController {
     @Autowired
     LikesRepository likesRepository;
 
-    @GetMapping("/")
-    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        ModelAndView viewModel = new ModelAndView("home");
-
-        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
-        viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
-
-        return viewModel;
+    @GetMapping("/home/{id}")
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "/home", userDetails);
     }
 
     @PostMapping("/posts/{id}/comment")
@@ -61,7 +44,7 @@ public class HomeController extends BaseController {
             commentsRepository.save(comments);
         }
 
-        return "redirect:/";
+        return "redirect:/home/" + getSignedInUser().getId();
     }
 
     @PostMapping("/posts/{id}/like")
@@ -74,6 +57,6 @@ public class HomeController extends BaseController {
         like.setCreatedAt(LocalDateTime.now());
         likesRepository.save(like);
 
-        return "redirect:/";
+        return "redirect:/home/" + getSignedInUser().getId();
     }
 }

@@ -3,7 +3,6 @@ package com.depaul.se452.group8.Espy.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
@@ -12,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "users")
 public class User implements Serializable {
     @Id

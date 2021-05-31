@@ -2,7 +2,10 @@ package com.depaul.se452.group8.Espy.controller;
 
 import java.time.LocalDateTime;
 import javax.validation.Valid;
+
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class FriendSearchController extends BaseController {
     @Autowired
     RequestsRepository requestsRepository;
-    @GetMapping("/friendsearch")
-    public ModelAndView friendsearch() {
-        ModelAndView viewModel = new ModelAndView("friendsearch");
-        return viewModel;
+
+    @GetMapping("/friendsearch/{id}")
+    public ModelAndView friendsearch(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "/friendsearch", userDetails);
     }
     @GetMapping("/requests/{id}")
     public Requests getRequestByFriendID(@PathVariable Integer id) {

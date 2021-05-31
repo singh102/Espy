@@ -2,12 +2,9 @@ package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.User;
 import com.depaul.se452.group8.Espy.repository.FavoritesRepository;
-import com.depaul.se452.group8.Espy.service.ImageService;
-import com.depaul.se452.group8.Espy.service.UserService;
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,29 +13,17 @@ import java.io.IOException;
 
 @Controller
 public class ProfileController extends BaseController {
-
     @Autowired
     FavoritesRepository favoritesRepository;
 
-    @Autowired
-    UserService userService;
+    @GetMapping("/profile/{id}")
+    public ModelAndView profile(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "profile", userDetails);
+    }
 
-    @Autowired
-    ImageService imageService;
-
-    @GetMapping("profile/{id}")
-    public ModelAndView profile(@PathVariable(value = "id")Integer id) {
-        ModelAndView viewModel = new ModelAndView("profile");
-        if (!getSignedInUser().getId().equals(id)) {
-            viewModel.addObject("user", getSignedInUser());
-            viewModel.addObject("posts", imageService.getAllImagesByUserId(getSignedInUser().getId()));
-        }
-        else {
-            User user = userService.getUserById(id);
-            viewModel.addObject("user", user);
-            viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
-        }
-        return viewModel;
+    @GetMapping("/profile")
+    public ModelAndView profileRedirect(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return profile(userDetails, getSignedInUser().getId());
     }
 
     @PostMapping("/saveProfile")

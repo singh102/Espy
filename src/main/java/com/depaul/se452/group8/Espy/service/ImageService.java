@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class ImageService {
-
     @Autowired
     private ImagesRepository imagesRepository;
 
