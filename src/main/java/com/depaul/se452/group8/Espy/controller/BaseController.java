@@ -1,6 +1,9 @@
 package com.depaul.se452.group8.Espy.controller;
 
+import com.depaul.se452.group8.Espy.model.DirectMessages;
+import com.depaul.se452.group8.Espy.model.Friends;
 import com.depaul.se452.group8.Espy.model.User;
+import com.depaul.se452.group8.Espy.repository.DirectMessagesRepository;
 import com.depaul.se452.group8.Espy.repository.UserRepository;
 import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
@@ -12,6 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.List;
+
 @Controller
 public class BaseController {
     @Autowired
@@ -22,6 +30,9 @@ public class BaseController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    DirectMessagesRepository directMessagesRepository;
 
     @ModelAttribute("SignedInUser")
     public User getSignedInUser() {
@@ -43,9 +54,16 @@ public class BaseController {
             viewModel.addObject("posts", imageService.getAllImagesByUserId(getSignedInUser().getId()));
             return viewModel;
         } else {
+
             User user = userService.getUserById(id);
+            List<DirectMessages> directMessages = directMessagesRepository.findByUserIds(id);
+
             viewModel.addObject("user", user);
             viewModel.addObject("posts", imageService.getAllImagesByUserId(id));
+
+            if (directMessages != null && directMessages.size() > 0)
+                viewModel.addObject("directMessages", directMessages);
+
             return viewModel;
         }
     }
