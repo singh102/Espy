@@ -2,7 +2,9 @@ package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.User;
 import com.depaul.se452.group8.Espy.repository.FavoritesRepository;
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,13 +17,13 @@ public class ProfileController extends BaseController {
     FavoritesRepository favoritesRepository;
 
     @GetMapping("/profile/{id}")
-    public ModelAndView profile(@PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "profile");
+    public ModelAndView profile(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "profile", userDetails);
     }
 
     @GetMapping("/profile")
-    public ModelAndView profileRedirect() {
-        return profile(getSignedInUser().getId());
+    public ModelAndView profileRedirect(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return profile(userDetails, getSignedInUser().getId());
     }
 
     @PostMapping("/saveProfile")

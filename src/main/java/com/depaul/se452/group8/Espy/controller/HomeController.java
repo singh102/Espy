@@ -26,8 +26,8 @@ public class HomeController extends BaseController {
     LikesRepository likesRepository;
 
     @GetMapping("/home/{id}")
-    public ModelAndView home(@PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "/home");
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "/home", userDetails);
     }
 
     @PostMapping("/posts/{id}/comment")
@@ -44,7 +44,7 @@ public class HomeController extends BaseController {
             commentsRepository.save(comments);
         }
 
-        return "redirect:/";
+        return "redirect:/home/" + getSignedInUser().getId();
     }
 
     @PostMapping("/posts/{id}/like")
@@ -57,6 +57,6 @@ public class HomeController extends BaseController {
         like.setCreatedAt(LocalDateTime.now());
         likesRepository.save(like);
 
-        return "redirect:/";
+        return "redirect:/home/" + getSignedInUser().getId();
     }
 }
