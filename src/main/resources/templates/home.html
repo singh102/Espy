@@ -1,7 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: header" />
+<head>
+    <head th:replace="fragments/header :: header"></head>
+    <title>Espy | Home</title>
+</head>
 
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
@@ -16,7 +19,7 @@
                         <div class="row">
                             <div class="col">
                                 <img th:src="@{${'data:image/png;base64,' + post.user.avatarImgBase64}}" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
-                                <a th:href="${'/friend/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
+                                <a th:href="${'/friends/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
                             </div>
 
                             <div class="col text-end">
@@ -93,13 +96,15 @@
                             <img th:src="@{${friend.friend.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + friend.friend.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
                         </div>
                         <div class="col-10 text-secondary">
-                            <a th:href="${'/friend/' + friend.friend.id}" th:text="${friend.friend.username}" />
+                            <a th:href="${'/friends/' + friend.friend.id}" th:text="${friend.friend.username}" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>
