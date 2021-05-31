@@ -25,118 +25,14 @@
       <div class="tab-content" id="nav-tabContent">
         <!--friends tab-->
         <div id="nav-friends" role="tabpanel" aria-labelledby="nav-friends-tab" class="container tab-pane fade show active"><br>
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="friend : ${user.allFriends}">
             <div class="col">
               <div class="card-body">
-                <img src="http://placeimg.com/32/32/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
+                <img th:src="@{${friend.friend.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + friend.friend.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+                <p class="card-text"><a th:text="${friend.friend.username}" /></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/68/68/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/45/45/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/50/50/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/78/78/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/84/84/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/80/80/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/10/10/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
-                  </div>
-                  <small class="text-muted">online</small>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card-body">
-                <img src="http://placeimg.com/12/12/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-                <p class="card-text">friend</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/friend/' + friend.friend.id}">profile</a></button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
                   </div>
                   <small class="text-muted">online</small>
@@ -147,13 +43,14 @@
         </div>
         <!--pending friend requests tab-->
         <div id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab" class="container tab-pane fade"><br>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="requests : ${user.allRequests}">
           <div class="col">
             <div class="card-body">
-              <img src="http://placeimg.com/32/32/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-              <p class="card-text">friend</p>
+              <img th:src="@{${requests.requests.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+              <p class="card-text"><a th:text="${requsts.requests.username}" /></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/requests/' + requests.requests.id}">profile</a></button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">accept</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">remove</button>
                 </div>
@@ -161,17 +58,18 @@
               </div>
             </div>
           </div>
+            </div>
         </div>
         <!--blocked users tab-->
         <div id="nav-blocked" role="tabpanel" aria-labelledby="nav-blocked-tab" class="container tab-pane fade"><br>
-          <h3>BLOCKED</h3>
-          <div class="col">
-            <div class="card-body">
-              <img src="http://placeimg.com/32/32/people" class="img-fluid rounded-circle mb-2 mr-3" width="64" height="64" />
-              <p class="card-text">friend</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">profile</button>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" th:each="requests : ${user.allBlocked}">
+            <div class="col">
+              <div class="card-body">
+                <img th:src="@{${blocked.blocked.avatarImgBase64 != null} ?  ${'data:image/png;base64,' + requests.requests.avatarImgBase64} : '/images/user.png'}" class="img-fluid rounded" width="32" height="32" />
+                <p class="card-text"><a th:text="${blocked.blocked.username}" /></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="${'/requests/' + blocked.blocked.id}">profile</a></button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">unblock</button>
                 </div>
                 <small class="text-muted">online</small>
@@ -182,6 +80,7 @@
       </div>
     </div>
   </div>
+  <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

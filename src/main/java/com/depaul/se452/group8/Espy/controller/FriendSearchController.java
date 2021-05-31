@@ -1,9 +1,11 @@
 package com.depaul.se452.group8.Espy.controller;
 
-import java.time.LocalDateTime;
+import com.depaul.se452.group8.Espy.repository.BlockedRepository;
+import com.depaul.se452.group8.Espy.repository.FriendsRepository;
+import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,26 +20,21 @@ public class FriendSearchController extends BaseController {
     @Autowired
     RequestsRepository requestsRepository;
 
-    @GetMapping("/friendsearch/{id}")
-    public ModelAndView friendsearch(@PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "/friendsearch");
+    @Autowired
+    BlockedRepository blockedRepository;
+
+    @Autowired
+    FriendsRepository friendsRepository;
+
+    @GetMapping("/friendsearch")
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        ModelAndView viewModel = new ModelAndView("friendsearch");
+        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
+        return viewModel;
     }
     @GetMapping("/requests/{id}")
     public Requests getRequestByFriendID(@PathVariable Integer id) {
         return requestsRepository.findById(id).get();
-    }
-
-    public String addRequest(RequestsRepository requestsRepository){
-        Requests requests = new Requests();
-        requests.setFriendId(4444);
-        requests.setUserId(1111);
-        requests.setCreatedAt(LocalDateTime.now());
-        requests.setUpdatedAt(LocalDateTime.now());
-
-        requests.addRequest(requests.getFriendId());
-        requestsRepository.save(requests);
-
-        return requests.toString();
     }
     @PostMapping("/requests")
     public Requests saveRequest(@Valid Requests request) {
