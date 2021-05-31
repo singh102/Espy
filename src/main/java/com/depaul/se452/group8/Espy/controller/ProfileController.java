@@ -16,14 +16,14 @@ public class ProfileController extends BaseController {
     @Autowired
     FavoritesRepository favoritesRepository;
 
-    @GetMapping("/profile/{id}")
-    public ModelAndView profile(@PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "/profile");
+    @GetMapping("/profile")
+    public ModelAndView profile() {
+        return getDifferenceInId(getSignedInUser().getId(), "/profile");
     }
 
-    @GetMapping("/profile")
-    public ModelAndView profileRedirect() {
-        return profile(getSignedInUser().getId());
+    @GetMapping("/profile/{id}")
+    public String profile(@PathVariable(value = "id")Integer id) {
+        return "redirect:/profile";
     }
 
     @PostMapping("/saveProfile")
@@ -45,6 +45,6 @@ public class ProfileController extends BaseController {
                                   @RequestParam("imagePost")MultipartFile imageFile,
                                   @RequestParam("caption")String caption) throws IOException {
         imageService.addImageAndCaptionToUser(id, imageFile, caption);
-        return "redirect:/profile/" + id;
+        return "redirect:/profile";
     }
 }

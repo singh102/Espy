@@ -26,7 +26,7 @@ public class FriendsController extends BaseController {
     @Autowired
     private ImageService imageService;
 
-    @GetMapping(value = "/friend/{id}")
+    @GetMapping(value = "/friends/{id}")
     public ModelAndView friends(@PathVariable(value = "id")Integer id) {
         ModelAndView viewModel = new ModelAndView("friends");
 
