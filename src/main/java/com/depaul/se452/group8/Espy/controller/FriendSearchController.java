@@ -1,14 +1,16 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 
+import com.depaul.se452.group8.Espy.model.Friends;
+import com.depaul.se452.group8.Espy.model.User;
+import com.depaul.se452.group8.Espy.repository.FriendsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import com.depaul.se452.group8.Espy.model.Requests;
 import com.depaul.se452.group8.Espy.repository.RequestsRepository;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,15 +18,30 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FriendSearchController extends BaseController {
     @Autowired
+    FriendsRepository friendsRepository;
+
+    @Autowired
     RequestsRepository requestsRepository;
 
-    @GetMapping("/friendsearch/{id}")
-    public ModelAndView friendsearch(@PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "/friendsearch");
+    @GetMapping("/friendsearch")
+    public ModelAndView friendsearch() {
+        return getDifferenceInId(getSignedInUser().getId(), "/friendsearch");
     }
+
+    @GetMapping("/friendsearch/{id}")
+    public String friendsearch(@PathVariable(value = "id")Integer id) {
+        return "redirect:/friendsearch";
+    }
+
     @GetMapping("/requests/{id}")
-    public Requests getRequestByFriendID(@PathVariable Integer id) {
+    public Requests getRequestByFriendID(@PathVariable(value = "id")Integer id) {
         return requestsRepository.findById(id).get();
+    }
+
+    @PostMapping("/findFriend")
+    public String findFriend() {
+        System.out.println("ID IS: " + getSignedInUser().getId());
+        return "redirect:/friendsearch";
     }
 
     public String addRequest(RequestsRepository requestsRepository){
