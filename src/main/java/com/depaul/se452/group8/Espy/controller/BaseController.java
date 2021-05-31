@@ -1,7 +1,6 @@
 package com.depaul.se452.group8.Espy.controller;
 
 import com.depaul.se452.group8.Espy.model.User;
-import com.depaul.se452.group8.Espy.repository.ImagesRepository;
 import com.depaul.se452.group8.Espy.repository.UserRepository;
 import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
@@ -20,9 +19,6 @@ public class BaseController {
 
     @Autowired
     ImageService imageService;
-
-    @Autowired
-    ImagesRepository imagesRepository;
 
     @Autowired
     UserRepository userRepository;
