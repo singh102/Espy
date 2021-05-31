@@ -160,19 +160,39 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="mt-4 mb-2">
-                <h4 class="mb-3">Your Images</h4>
+                <h4 class="mb-3">
+                    <i class="fas fa-camera-retro"></i> Your Images
+                </h4>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageComment">
                     Upload Image and Caption
                 </button>
             </div>
-            <div class="col-3" th:each="post : ${posts}">
-                <div class="card mt-2" style="width: 18rem; border-radius: 20px;">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="post : ${posts}">
+                <div class="card mt-2" style="width: 100%; border-radius: 20px;">
                     <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
 border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + post.imageBase64}}" data-holder-rendered="true">
                     <div class="card-body" style="height: 80px;">
                         <p class="card-text" th:text="${post.caption}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="mt-4 mb-2">
+                <h4 class="mb-1">
+                    <i class="far fa-heart"></i> Your Favorites
+                </h4>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="favorite : ${user.allFavorites}">
+                <div class="card mt-2" style="width: 100%; border-radius: 20px;">
+                    <img class="card-img-top" style="height: 180px; width: 100%; display: block; border-top-left-radius: 20px;
+border-top-right-radius: 20px;" th:src="@{${'data:image/png;base64,' + favorite.image.imageBase64}}" data-holder-rendered="true">
+                    <div class="card-body" style="height: 80px;">
+                        <p class="card-text" th:text="${favorite.image.caption}"></p>
                     </div>
                 </div>
             </div>

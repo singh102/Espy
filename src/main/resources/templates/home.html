@@ -31,19 +31,34 @@
 
                     <img th:src="@{${'data:image/png;base64,' + post.imageBase64}}" class="img-fluid rounded w-100 mb-2" />
 
-                    <p class="small">
-                        <form method="post" th:action="${'/posts/' + post.id + '/like'}">
-                            <button type="submit" class="btn btn-link d-inline align-middle p-0">
-                                <i class="far fa-heart"></i>
-                            </button>
+                    <div class="row">
+                        <div class="col">
+                            <p class="small">
+                                <form method="post" th:action="${'/posts/' + post.id + '/like'}">
+                                    <button type="submit" class="btn btn-link d-inline align-middle p-0">
+                                        <i class="far fa-thumbs-up"></i>
+                                    </button>
 
-                            <span class="d-inline align-middle">
-                                <span th:text="${#lists.size(post.allLikes)}" />
-                                <span th:if="${#lists.size(post.allLikes) != 1}" th:text="${' Likes'}" />
-                                <span th:if="${#lists.size(post.allLikes) == 1}" th:text="${' Like'}" />
-                            </span>
-                        </form>
-                    </p>
+                                    <span class="d-inline align-middle">
+                                        <span th:text="${#lists.size(post.allLikes)}" />
+                                        <span th:if="${#lists.size(post.allLikes) != 1}" th:text="${' Likes'}" />
+                                        <span th:if="${#lists.size(post.allLikes) == 1}" th:text="${' Like'}" />
+                                    </span>
+                                </form>
+                            </p>
+                        </div>
+
+                        <div class="col text-end">
+                            <p class="small">
+                                <form method="post" th:action="${'/posts/' + post.id + '/favorite'}">
+                                    <span class="d-inline align-middle">Favorite </span>
+                                    <button type="submit" class="btn btn-link d-inline align-middle p-0">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                 </form>
+                            </p>
+                        </div>
+                    </div>
 
                     <p class="mb-2" th:text="${post.caption}" />
 

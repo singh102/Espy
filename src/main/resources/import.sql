@@ -28,3 +28,6 @@ INSERT INTO comments (image_id, user_id, comment, created_at, updated_at) VALUES
 
 INSERT INTO friends (user_id, friend_id, created_at, updated_at) VALUES(1, 2, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
 INSERT INTO friends (user_id, friend_id, created_at, updated_at) VALUES(2, 1, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
+
+INSERT INTO favorites (image_id, user_id, created_at, updated_at) VALUES(1, 1, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');
+INSERT INTO favorites (image_id, user_id, created_at, updated_at) VALUES(3, 2, '2021-05-31 00:00:00.00', '2021-05-31 00:00:00.00');

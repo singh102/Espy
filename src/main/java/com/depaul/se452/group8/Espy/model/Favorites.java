@@ -19,6 +19,9 @@ public class Favorites implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_id")
+    private Integer userId;
+
     @Column(name = "image_id")
     private Integer imageId;
 
@@ -34,4 +37,12 @@ public class Favorites implements Serializable {
     public Iterable<Integer> getFavorites() {
         return favs;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private Images image;
 }
