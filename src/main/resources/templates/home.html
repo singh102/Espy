@@ -13,8 +13,16 @@
             <div th:each="post : ${posts}"  class="card mb-3">
                 <div class="card-body text-left">
                     <h6 class="card-title mb-2">
-                        <img th:src="@{${'data:image/png;base64,' + post.user.avatarImgBase64}}" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
-                        <a th:href="${'/friend/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
+                        <div class="row">
+                            <div class="col">
+                                <img th:src="@{${'data:image/png;base64,' + post.user.avatarImgBase64}}" class="img-fluid rounded mb-2 mr-3" width="32" height="32" />
+                                <a th:href="${'/friend/' + post.user.id}" class="pl-5 my-auto" th:text="${post.user.username}" />
+                            </div>
+
+                            <div class="col text-end">
+                                <p class="small text-secondary my-auto text-end" th:text="${#temporals.format(post.createdAt, 'MM-dd-yyyy hh:mm a')}" />
+                            </div>
+                        </div>
                     </h6>
 
                     <img th:src="@{${'data:image/png;base64,' + post.imageBase64}}" class="img-fluid rounded w-100 mb-2" />
