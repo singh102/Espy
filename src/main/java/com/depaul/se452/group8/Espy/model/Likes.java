@@ -29,10 +29,15 @@ public class Likes implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Integer incrementLikes(Integer imageId) {
-        return currentLikes += 1;
-    }
-    public Integer getLikes(Integer imageId) {
-        return currentLikes;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id", referencedColumnName = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    private Images image;
+
+//    public Integer incrementLikes(Integer imageId) {
+//        return currentLikes += 1;
+//    }
+//
+//    public Integer getLikes(Integer imageId) {
+//        return currentLikes;
+//    }
 }
