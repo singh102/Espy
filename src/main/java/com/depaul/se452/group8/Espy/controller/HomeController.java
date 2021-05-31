@@ -26,10 +26,10 @@ public class HomeController extends BaseController {
     LikesRepository likesRepository;
 
 
-    @GetMapping("/home/{id}")
-    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String id) {
+    @GetMapping("/home")
+    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         ModelAndView viewModel = new ModelAndView("home");
-        viewModel.addObject("user", userService.getUserById(Integer.parseInt(id)));
+        viewModel.addObject("user", userService.getUserById(userDetails.getId()));
         viewModel.addObject("posts", imagesRepository.findByUserIds(userDetails.getId()));
         return viewModel;
     }
@@ -48,7 +48,7 @@ public class HomeController extends BaseController {
             commentsRepository.save(comments);
         }
 
-        return "redirect:/home/" + id;
+        return "redirect:/home";
     }
 
     @PostMapping("/posts/{id}/like")
@@ -61,6 +61,6 @@ public class HomeController extends BaseController {
         like.setCreatedAt(LocalDateTime.now());
         likesRepository.save(like);
 
-        return "redirect:/home" + id;
+        return "redirect:/home";
     }
 }
