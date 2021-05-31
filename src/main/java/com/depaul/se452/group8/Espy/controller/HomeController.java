@@ -1,16 +1,14 @@
 package com.depaul.se452.group8.Espy.controller;
 
-import com.depaul.se452.group8.Espy.model.*;
+import com.depaul.se452.group8.Espy.model.Comments;
+import com.depaul.se452.group8.Espy.model.Likes;
 import com.depaul.se452.group8.Espy.repository.*;
-import com.depaul.se452.group8.Espy.service.ImageService;
 import com.depaul.se452.group8.Espy.service.UserDetailsImpl;
-import com.depaul.se452.group8.Espy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.time.LocalDateTime;
 
 @Controller
@@ -28,8 +26,8 @@ public class HomeController extends BaseController {
     LikesRepository likesRepository;
 
     @GetMapping("/home/{id}")
-    public ModelAndView home(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(value = "id")Integer id) {
-        return getDifferenceInId(id, "home");
+    public ModelAndView home(@PathVariable(value = "id")Integer id) {
+        return getDifferenceInId(id, "/home");
     }
 
     @PostMapping("/posts/{id}/comment")
